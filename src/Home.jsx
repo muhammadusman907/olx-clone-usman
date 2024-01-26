@@ -1,8 +1,8 @@
 import { MyNavbar } from "./component/Navbar.jsx"
 import MyCard from "./component/Card.jsx"
 
-export const Home = () => {
-
+export const Home = ({checkIsLogin}) => {
+    //   console.log(checkIsLogin);
     return (
        
         <>

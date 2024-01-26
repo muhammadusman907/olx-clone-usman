@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -11,9 +12,21 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {Link }from "react-router-dom";
 import SELL_BTN from "../Images/SEll_BTN.svg"
 import { About } from "../About.jsx";
-
+import { auth ,onAuthStateChanged  } from "../config/firbase.js";
 export const MyNavbar = () => {
-  console.log(Link);
+  const [islogin ,setIslogin] = useState("")
+   useEffect(() => {
+     onAuthStateChanged(auth, (user) => {
+       if (user) {
+         const uid = user.uid;
+         console.log(uid);
+         uid && setIslogin(true);
+       } else {
+         setIslogin(false);
+       }
+     });
+   }, []);
+  // console.log(Link);
   return (
     <>
       <div className="bg-gray-500 w-[100%] ">
@@ -24,7 +37,14 @@ export const MyNavbar = () => {
           <Link to="login">
            {<li className="text-white">Login</li>}
           </Link>
+          
           <li>
+           {
+            islogin && <Link to="/dashboard">
+           {<li className="text-white">Dashbord</li>}
+           </Link>
+           }  
+          
             <button className="relative flex justify-center items-center
                flex-col
             ">

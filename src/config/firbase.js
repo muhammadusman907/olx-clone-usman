@@ -4,8 +4,22 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyADW9IPRTobhUj6eZpAeDoiU1ne47IIuiM",
   authDomain: "olx-assigment.firebaseapp.com",
@@ -20,11 +34,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
-
+const storage = getStorage();
+const db = getFirestore(app);
 export {
   auth,
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  storage,
+  db,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
 };
