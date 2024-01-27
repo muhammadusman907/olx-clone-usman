@@ -10,34 +10,41 @@ import { Login } from "./login/Login.jsx";
 import { SignUp } from "./signup/SignUp.jsx";
 import { Dashbord } from "./dashboard/Dashboard.jsx";
 import { useEffect, useState } from "react";
+import { Profile } from "./profile/Profile.jsx";
 
 function App() {
   const [islogin, setIslogin] = useState(false);
-  const navigate = useNavigate();
-
- 
   useEffect(() => {
- onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      console.log(uid );
-      uid && setIslogin(true);
-
-    } else {
-            setIslogin(false)
-    }
-  });
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(uid);
+        uid && setIslogin(true);
+      } else {
+        setIslogin(false);
+      }
+    });
   }, []);
   return (
     <>
       <div className="App">
         <Routes>
-          <Route path="/dashboard" element={<Dashbord />}></Route>
-          <Route path="/" element={islogin ? <Navigate to="/home" /> :<Login />} />
-          <Route path="/home" element={islogin ?<Home /> : <Navigate to="/"/>}></Route>
+          <Route path="/" element={  <Home />}></Route>
+          <Route
+            path="dashboard"
+            element={islogin ? <Dashbord /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="login"
+            element={islogin ? <Navigate to="/" /> : <Login />}
+          />
           <Route path="about" element={<About />} />
           {/* <Route path="login" element={<Login />}></Route> */}
-          <Route path="signup" element={islogin ? <Navigate to="/home"/> : <SignUp />}></Route>
+          <Route
+            path="signup"
+            element={islogin ? <Navigate to="/" /> : <SignUp />}
+          ></Route>
+          <Route path="profile" element={ <Profile /> } ></Route>
         </Routes>
       </div>
     </>

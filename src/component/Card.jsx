@@ -5,46 +5,68 @@ import Button from "react-bootstrap/Button";
 import { collection, query, where, getDocs, db } from "../config/firbase.js";
 import { useEffect, useState } from "react";
 import { getMetadata } from "firebase/storage";
+import Spinner from "react-bootstrap/Spinner";
 
 import React from "react";
 import { Card } from "antd";
 const { Meta } = Card;
 function MyCard() {
   const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const products = [];
   const getProduct = async () => {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    querySnapshot.forEach((doc) => {
-      products.push(doc.data());
-      console.log(doc.id, " => ", doc.data());
-      setProductList(products);
-      // console.log(products);
-    });
+   try {
+     const querySnapshot = await getDocs(collection(db, "products"));
+     querySnapshot.forEach((doc) => {
+       products.push(doc.data());
+       console.log(doc.id, " => ", doc.data());
+       setProductList(products);
+       // console.log(products);
+     });
+   } catch (error) {
+     console.error("Error getting products: ", error);
+   } finally {
+     setLoading(false); // Set loading to false when data is fetched (success or error)
+   }
+
   };
   useEffect(() => {
     getProduct();
   }, []);
   return (
     <>
-    <div className="flex justify-around">
-      {
-        // console.log(productList)
-      
-        productList.map((value, index) => (
-          // console.log(value)
-          <Card
-          className="border-2"
-            hoverable
-            style={{
-              width: 240,
-            }}
-            cover={<img alt="example" src={value.ProductImage} />}
+      <div className="flex justify-around flex-wrap">
+        {
+          // console.log(productList)
+       
+   productList.map((value, index) => (
+            // console.log(value)
+           
+      !loading ? <Card key={index}
+              className="border-2"
+              hoverable
+              style={{
+                width: 240,
+              }}
+              cover={
+                <img
+                  alt="example"
+                  src={value.ProductImage}
+                  className="width-[100%] h-[150x] object-cover"
+                />
+              }
             >
-            <div><b>Rs : {value.price}</b></div>
-            <Meta title={value.productName} description={value.description} />
-          </Card>
-        ))
-      }
+              <div>
+                <b>Rs : {value.price}</b>
+              </div>
+              <Meta
+                title={value.productName}
+                description={`${value.description.slice(0, 50)}...`}
+              />
+            </Card> :  <Spinner animation="grow" variant="primary" /> 
+          )) 
+        }
+        
       </div>
     </>
   );

@@ -1,0 +1,15 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-space-gap-col-small{
+    width: 100% !important;
+}
+.ant-space-item{
+    width: 100%;
+}
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select{
+    width: 100% ;
+}
