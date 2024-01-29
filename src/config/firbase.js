@@ -19,6 +19,8 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
+  doc
 } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyADW9IPRTobhUj6eZpAeDoiU1ne47IIuiM",
@@ -52,5 +54,7 @@ export {
   addDoc,
   query,
   where,
+  getDoc,
+  doc,
   getDocs,
 };
