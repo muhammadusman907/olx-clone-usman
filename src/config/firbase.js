@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 import {
   getStorage,
@@ -44,6 +45,8 @@ export {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut
+  ,
   getStorage,
   ref,
   uploadBytesResumable,

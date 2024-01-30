@@ -11,6 +11,7 @@ import {
   db,
   getDoc,
 } from "../config/firbase.js";
+import {Navigate }from "react-router-dom"
 import { useEffect, useState } from "react";
 import { getMetadata } from "firebase/storage";
 import Spinner from "react-bootstrap/Spinner";
@@ -21,6 +22,7 @@ const { Meta } = Card;
 function MyCard() {
   const [productList, setProductList] = useState([]);
   const [singleProductIem, setSingleProductItem] = useState({});
+  const [singlePageClick, setSinglePageClick] = useState(false);
   const [loading, setLoading] = useState(true);
   const products = [];
   const getProduct = async () => {
@@ -43,18 +45,18 @@ function MyCard() {
   };
   const singleProduct = async (singleItemId) => {
     console.log(singleItemId);
-
-    const docRef = doc(db, "products", singleItemId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setSingleProductItem(docSnap.data());
-      console.log("Document data:", docSnap.data());
-      setSingleProductItem(docSnap.data());
-      showModal();
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
+     setSinglePageClick(true);
+    // const docRef = doc(db, "products", singleItemId);
+    // const docSnap = await getDoc(docRef);
+    // if (docSnap.exists()) {
+    //   setSingleProductItem(docSnap.data());
+    //   console.log("Document data:", docSnap.data());
+    //   setSingleProductItem(docSnap.data());
+    //   showModal();
+    // } else {
+    //   // docSnap.data() will be undefined in this case
+    //   console.log("No such document!");
+    // }
   };
   useEffect(() => {
     getProduct();
@@ -62,26 +64,26 @@ function MyCard() {
   // =============================
   // ================ modal ======
   // =============================
-  const [modalloading, setModalLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const showModal = () => {
-    setOpen(true);
-  };
-  const handleOk = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-    }, 3000);
-  };
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  // const [open, setOpen] = useState(false);
+  // const showModal = () => {
+  //   setOpen(true);
+  // };
+  // const handleOk = () => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     setOpen(false);
+  //   }, 3000);
+  // };
+  // const handleCancel = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <>
       <div className="flex justify-around flex-wrap">
-        {
+        {singlePageClick ?<Navigate to={`single-product${""}`}   />
+        :
           // console.log(productList)
           loading ? (
             <div className="h-screen w-full flex items-center justify-center ">
@@ -94,7 +96,7 @@ function MyCard() {
                 {/* <Button type="primary" onClick={}>
                   Open Modal with customized footer
                 </Button> */}
-                <Modal
+                {/* <Modal
                   className="p-0"
                   open={open}
                   onOk={handleOk}
@@ -144,11 +146,11 @@ function MyCard() {
                       title={singleProductIem.productName}
                       description={
                         singleProductIem.description &&
-                       ` ${singleProductIem.description.slice(0, 60)}...`
+                        ` ${singleProductIem.description.slice(0, 60)}...`
                       }
                     />
                   </Card>
-                </Modal>
+                </Modal> */}
 
                 <Card
                   key={index}
@@ -156,23 +158,27 @@ function MyCard() {
                   className="border-2 mt-2"
                   hoverable
                   style={{
-                    width: 240,
+                    width: "300px",
+                    height: "314px",
                   }}
                   cover={
                     <img
                       alt="example"
                       src={value.ProductImage}
-                      className="width-[100%] h-32 object-cover"
+                      className="width-[100%] h-[134px] object-cover border-b-2"
                     />
                   }
                 >
                   <div>
-                    <b>Rs : {value.price}</b>
+                    <b
+                      className="font-bold text-[18px]"
+                    >
+                      Rs {Intl.NumberFormat().format(+value.price)}
+                    </b>
                   </div>
-                  <Meta
-                    title={value.productName}
-                    description={`${value.description.slice(0, 50)}...`}
-                  />
+                  <Meta className="h-[50px] text-black text-[17px] flex items-center lea" 
+                  description={`${value.description.slice(0, 50)}...`} />
+                  <Meta title={value.productName} />
                 </Card>
               </>
             ))

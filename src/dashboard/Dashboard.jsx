@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Upload, InputNumber, Space } from "antd";
+import Spinner from "react-bootstrap/Spinner";
+
 import { MyNavbar } from "../component/Navbar.jsx";
 import "./dashborad.css";
 // const {TextArea} = Input ;
@@ -13,25 +15,27 @@ import {
 import { db, collection, addDoc } from "../config/firbase.js";
 import TextArea from "antd/es/input/TextArea.js";
 export const Dashbord = () => {
+  const [loading, setLoading] = useState(false);
   const [productName, setProductName] = useState("");
-  const [fileValue , setFileValue] = useState();
-  const [price , setPrice] = useState("");
+  const [fileValue, setFileValue] = useState();
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-     const getPriceValue = (priceValue) => {
-            console.log(priceValue);
-            setPrice(priceValue)
-     }
-    //  =====================================
-    //  add onclick and all values get button
-    //  ==================================== 
-    const onFinish = async () => {
+  const getPriceValue = (priceValue) => {
+    console.log(priceValue);
+    setPrice(priceValue);
+  };
+  //  =====================================
+  //  add onclick and all values get button
+  //  ====================================
+  const onFinish = async () => {
+    setLoading(true);
     console.log(productName);
     console.log("price", price);
     console.log("description ", description);
     console.log(fileValue);
-    // =================== 
+    // ===================
     //  fire base add data
-    // =================== 
+    // ===================
     const docRef = await addDoc(collection(db, "products"), {
       productName,
       price,
@@ -39,17 +43,19 @@ export const Dashbord = () => {
       ProductImage: fileValue,
     });
     console.log("Document written with ID: ", docRef.id);
-     setProductName( () => "");
-     setPrice( () => "");
-     setDescription(() => "");
-    console.log("1" ,productName);
-    console.log("2" , price);
-    console.log("4" ,  description);
-};
-//   ============================
-//   fire base storage download url button
-//   ============================
+    setProductName(() => "");
+    setPrice(() => "");
+    setDescription(() => "");
+    console.log("1", productName);
+    console.log("2", price);
+    console.log("4", description);
+    setLoading(false);
+  };
+  //   ============================
+  //   fire base storage download url button
+  //   ============================
   const imageUrl = (file) => {
+  
     return new Promise((resolve, reject) => {
       const storageRef = ref(storage, `images/${file.name}`);
 
@@ -76,6 +82,7 @@ export const Dashbord = () => {
             console.log("File available at", downloadURL);
             resolve(downloadURL);
             setFileValue(downloadURL);
+            setLoading(true)
           });
         }
       );
@@ -87,87 +94,87 @@ export const Dashbord = () => {
       {/* <MyNavbar/> */}
       {/* =========================
             ======== heading ========  */}
-      <h2 className="align-center mt-2"> Post Your Add</h2>
-      <div className="flex justify-center">
-        {/* ============================= 
+      <h2 className="text-center mt-2"> Post Your Add</h2>
+     (
+
+        <div className="flex justify-center">
+          {/* ============================= 
          ======== Tittle Input ==========   */}
-        <Form className="w-[70%] border-2 p-10">
-          <Form.Item label="Title">
-            <Input
-              placeholder="Tittle"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-            />
-          </Form.Item>
-          {/* <Form.Item label="Price">
-            <Input
-              placeholder="Price"
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </Form.Item> */}
-          {/* ============================= 
-         ======== Price Input ==========   */}
-          <Form.Item label="Price" className="w-[100%]">
-            <Space>
-              <InputNumber
-                className="w-[100%] "
-                value={price}
-                placeholder="price"
-                formatter={(value) =>
-                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                onChange={getPriceValue}
+          <Form className="w-[70%] border-2 p-10">
+            <Form.Item label="Title">
+              <Input
+                placeholder="Tittle"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
               />
-            </Space>
-          </Form.Item>
-          {/* ============================= 
-         ======== description Input ==========   */}
-          <Form.Item label="Description">
-            <TextArea 
-             value={description}
-             onChange={(e) => setDescription(e.target.value)} />
-          </Form.Item>
-          {/* ============================= 
-         ======== product Image Input ==========   */}
-          <Form.Item
-            label="Product Image"
-            valuePropName="fileList"
-            onChange={(e) => imageUrl(e.target.files[0])}
-          >
-            <Upload action="/upload.do" listType="picture-card">
-              <button
-                style={{
-                  border: 0,
-                  background: "none",
-                }}
-                type="button"
-              >
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </button>
-            </Upload>
-          </Form.Item>
-          <Form.Item>
+            </Form.Item>
+
             {/* ============================= 
-         ======== post Button ==========   */}
-            <Button
-              htmlType="submit"
-              type="primary"
-              className="bg-blue-500 w-[100%] h-10"
-              onClick={onFinish}
+         ======== Price Input ==========   */}
+            <Form.Item label="Price" className="w-[100%]">
+              <Space>
+                <InputNumber
+                  className="w-[100%] "
+                  value={price}
+                  placeholder="price"
+                  formatter={(value) =>
+                    `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                  onChange={getPriceValue}
+                />
+              </Space>
+            </Form.Item>
+            {/* ============================= 
+         ======== description Input ==========   */}
+            <Form.Item label="Description">
+              <TextArea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Form.Item>
+            {/* ============================= 
+         ======== product Image Input ==========   */}
+            <Form.Item
+              label="Product Image"
+              valuePropName="fileList"
+              onChange={(e) => imageUrl(e.target.files[0])}
             >
-              Post Now
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+              <Upload action="/upload.do" listType="picture-card">
+                <button
+                  style={{
+                    border: 0,
+                    background: "none",
+                  }}
+                  type="button"
+                >
+                  <PlusOutlined />
+                  <div
+                    style={{
+                      marginTop: 8,
+                    }}
+                  >
+                    Upload
+                  </div>
+                </button>
+              </Upload>
+            </Form.Item>
+            <Form.Item>
+              {/* ============================= 
+         ======== post Button ==========   */}
+              <Button
+                htmlType="submit"
+                type="primary"
+                className="bg-blue-500 w-[100%] h-10"
+                disabled = {!loading}
+                onClick={onFinish}
+              >
+                Post Now
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      )
     </>
   );
 };

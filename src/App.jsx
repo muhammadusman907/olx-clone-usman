@@ -11,6 +11,7 @@ import { SignUp } from "./signup/SignUp.jsx";
 import { Dashbord } from "./dashboard/Dashboard.jsx";
 import { useEffect, useState } from "react";
 import { Profile } from "./profile/Profile.jsx";
+import { SingleProduct } from "./single_product/SingleProduct.jsx";
 
 function App() {
   const [islogin, setIslogin] = useState(false);
@@ -29,7 +30,7 @@ function App() {
     <>
       <div className="App">
         <Routes>
-          <Route path="/" element={  <Home />}></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route
             path="dashboard"
             element={islogin ? <Dashbord /> : <Navigate to="/login" />}
@@ -44,7 +45,9 @@ function App() {
             path="signup"
             element={islogin ? <Navigate to="/" /> : <SignUp />}
           ></Route>
-          <Route path="profile" element={ <Profile /> } ></Route>
+          <Route path="profile" element={<Profile />}></Route>
+          <Route path="single-product" element={<SingleProduct />}></Route>
+      
         </Routes>
       </div>
     </>
