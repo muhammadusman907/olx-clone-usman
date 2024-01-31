@@ -1,19 +1,29 @@
 import React from "react";
-import {auth , getAuth , createUserWithEmailAndPassword } from "../config/firbase.js"
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  doc,
+  setDoc,
+  db
+} from "../config/firbase.js";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { Link } from "react-router-dom";
-import { formatCountdown } from "antd/es/statistic/utils";
+// import { formatCountdown } from "antd/es/statistic/utils";
 export const SignUp = () => {
   const onFinish = (values) => {
   console.log("Received values of form: ", values);
-    const {email , password} = values ;
+    const {email , password ,username} = values ;
     console.log(email)   
-const auth = getAuth();
 createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up
+  .then( async(userCredential) => {
     const user = userCredential.user;
+     await setDoc(doc(db, "users", user.uid), {
+        email ,
+        username,
+        userId: user.uid
+});
+    
      console.log(user);
   })
   .catch((error) => {
@@ -21,18 +31,6 @@ createUserWithEmailAndPassword(auth, email, password)
     const errorMessage = error.message;
     console.log(errorMessage);
   });
-
-
-
-
-
-
-
-
-
-
-
-   
   };
   return (
     <>

@@ -11,8 +11,9 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   storage,
+  auth,
 } from "../config/firbase.js";
-import { db, collection, addDoc } from "../config/firbase.js";
+import {db, collection, addDoc, getDoc ,doc  } from "../config/firbase.js";
 import TextArea from "antd/es/input/TextArea.js";
 export const Dashbord = () => {
   const [loading, setLoading] = useState(false);
@@ -27,22 +28,37 @@ export const Dashbord = () => {
   //  =====================================
   //  add onclick and all values get button
   //  ====================================
+  console.log(auth.currentUser.uid);
   const onFinish = async () => {
     setLoading(true);
     console.log(productName);
     console.log("price", price);
     console.log("description ", description);
     console.log(fileValue);
-    // ===================
-    //  fire base add data
-    // ===================
+    const userRef = doc(db, "users", auth.currentUser.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data()); 
+      
     const docRef = await addDoc(collection(db, "products"), {
       productName,
       price,
       description,
       ProductImage: fileValue,
+      userName: docSnap.data(),
     });
-    console.log("Document written with ID: ", docRef.id);
+     console.log("Document written with ID: ", docRef.id);
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+    // ===================
+    //  fire base add data
+    // ===================
+
+ 
+    
     setProductName(() => "");
     setPrice(() => "");
     setDescription(() => "");

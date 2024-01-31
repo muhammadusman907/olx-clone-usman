@@ -1,10 +1,10 @@
 // import logo from './logo.svg';
 import "./App.css";
-import { auth, onAuthStateChanged } from "./config/firbase.js";
+import { auth, onAuthStateChanged, getDoc, doc, db } from "./config/firbase.js";
 // import { MyNavbar } from "./component/Navbar.jsx";
 // import MyCard from './component/Card.jsx'
 import { About } from "./About.jsx";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useRouteMatch } from "react-router-dom";
 import { Home } from "./Home.jsx";
 import { Login } from "./login/Login.jsx";
 import { SignUp } from "./signup/SignUp.jsx";
@@ -12,15 +12,25 @@ import { Dashbord } from "./dashboard/Dashboard.jsx";
 import { useEffect, useState } from "react";
 import { Profile } from "./profile/Profile.jsx";
 import { SingleProduct } from "./single_product/SingleProduct.jsx";
+import { Chat } from "./chat/Chat.jsx";
 
 function App() {
   const [islogin, setIslogin] = useState(false);
+
+  // console.log(url)
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) { 
         const uid = user.uid;
-        console.log(uid);
-        uid && setIslogin(true);
+        const docRef = doc(db, "users",uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          setIslogin(true);
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+        }  
       } else {
         setIslogin(false);
       }
@@ -47,7 +57,7 @@ function App() {
           ></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="single-product" element={<SingleProduct />}></Route>
-      
+          <Route path="single-product/chat" element={<Chat />}></Route>
         </Routes>
       </div>
     </>

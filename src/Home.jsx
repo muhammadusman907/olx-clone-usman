@@ -8,7 +8,6 @@ export const Home = ({checkIsLogin}) => {
         <>
             <MyNavbar />
             <div>
-                
                 <MyCard />
             </div>
         </>
