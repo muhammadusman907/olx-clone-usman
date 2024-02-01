@@ -13,11 +13,11 @@ import { useEffect, useState } from "react";
 import { Profile } from "./profile/Profile.jsx";
 import { SingleProduct } from "./single_product/SingleProduct.jsx";
 import { Chat } from "./chat/Chat.jsx";
+import { Outlet } from "react-router-dom/dist/index.js";
 
 function App() {
   const [islogin, setIslogin] = useState(false);
 
-  // console.log(url)
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) { 
@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <div className="App">
-        <Routes>
+      <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route
             path="dashboard"

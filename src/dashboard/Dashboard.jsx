@@ -56,9 +56,6 @@ export const Dashbord = () => {
     // ===================
     //  fire base add data
     // ===================
-
- 
-    
     setProductName(() => "");
     setPrice(() => "");
     setDescription(() => "");

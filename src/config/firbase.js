@@ -22,7 +22,10 @@ import {
   getDocs,
   getDoc,
   doc,
-  setDoc
+  setDoc,
+  serverTimestamp,
+  onSnapshot,
+  orderBy,
 } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyADW9IPRTobhUj6eZpAeDoiU1ne47IIuiM",
@@ -46,8 +49,7 @@ export {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut
-  ,
+  signOut,
   getStorage,
   ref,
   uploadBytesResumable,
@@ -61,5 +63,8 @@ export {
   getDoc,
   doc,
   getDocs,
-  setDoc
+  setDoc,
+  serverTimestamp,
+  onSnapshot,
+  orderBy,
 };

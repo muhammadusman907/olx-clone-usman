@@ -11,7 +11,7 @@ export const SingleProduct = () => {
   const [searchParams] = useSearchParams();
   const [singleProductItem, setSingleProductItem] = useState({});
   const [chatPageOpen, setChatPageOpen] = useState(false);
-
+  const [userinfo , setUserinfo] = useState({})
   //   ===================================================
   // =================== get single product with fire base
   // =====================================================
@@ -24,6 +24,7 @@ export const SingleProduct = () => {
       //   setSingleProductItem(docSnap.data());
       console.log("Document data:", docSnap.data());
       setSingleProductItem(docSnap.data());
+      setUserinfo(docSnap.data().userName)
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -43,7 +44,7 @@ export const SingleProduct = () => {
   return (
     <>
       {chatPageOpen ? 
-        <Navigate to={`chat?chat=${searchParams.get("id")}`} />
+        <Navigate to={`chat?chat=${userinfo.userId}`} />
       :
       <Row className="ms-10 mt-12 me-10">
         <Col span={16}>
@@ -78,7 +79,9 @@ export const SingleProduct = () => {
               </Col>
               <Col span={16}>
                 <span className="ps-2 font-bold cursor-pointer">
-                  user@gamil.com
+                 
+                  {userinfo.email}
+                  {/* {console.log("username" , singleProductItem.userName.username)} */}
                 </span>
                 <div className="ps-2 font-bold cursor-pointer">
                   see profile{">"}{" "}
