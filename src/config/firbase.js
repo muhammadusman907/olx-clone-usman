@@ -27,6 +27,7 @@ import {
   onSnapshot,
   orderBy,
 } from "firebase/firestore";
+import { getDatabase , set  } from "firebase/database";
 const firebaseConfig = {
   apiKey: "AIzaSyADW9IPRTobhUj6eZpAeDoiU1ne47IIuiM",
   authDomain: "olx-assigment.firebaseapp.com",
@@ -37,12 +38,15 @@ const firebaseConfig = {
   measurementId: "G-31Y7MVHWD3",
 };
 
+
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const storage = getStorage();
 const db = getFirestore(app);
+const database = getDatabase();
 export {
   auth,
   getAuth,
@@ -67,4 +71,6 @@ export {
   serverTimestamp,
   onSnapshot,
   orderBy,
+  database,
+  set,
 };

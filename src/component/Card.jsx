@@ -44,7 +44,7 @@ function MyCard() {
         products.push(fireSData);
          console.log(userId);
         if (userId) {
-          let product = products.filter((value) => value.userName.userId === userId);
+          let product = products.filter((value) => value.userName.userId !== userId);
           console.log("filter=========>", product)
           setProductList(product);
         } else {
