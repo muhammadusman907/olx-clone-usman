@@ -23,7 +23,7 @@ function MyCard() {
   const [productId, setProductId] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const products = [];
+const products = [];
  let userId = "";
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -73,9 +73,12 @@ function MyCard() {
           <Navigate to={`single-product?id=${productId}`} />
         ) : // console.log(productList)
         loading ? (
-          <div className="h-screen w-full flex items-center justify-center ">
-            <Spinner animation="grow" variant="primary" />
-          </div>
+                
+        <div className="flex justify-center items-center h-screen w-full">
+          <div class="rounded-md h-12 w-12 border-4 border-t-4 border-blue-500 animate-spin absolute"></div>
+        </div>
+    
+
         ) : (
           productList.map((value, index) => (
             <>

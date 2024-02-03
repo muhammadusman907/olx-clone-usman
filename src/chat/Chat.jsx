@@ -26,17 +26,32 @@ export const Chat = () => {
   const [searchParams] = useSearchParams();
   const [chatUserList, setChatUserList] = useState([]);
   const [getMessage, setGetMessage] = useState([]);
+  const [selectChat, setSelectChat] = useState(true);
   const [singleUserData, setSingleUserData] = useState({});
+  const [selectId, setSelectId] = useState("");
+  const [size , setSize] = useState(true)
   const topToBottom = useRef(null);
 
+  console.log({ topToBottom });
+  topToBottom.scrollTop = topToBottom.scrollHeight - topToBottom.clientHeight;
 
-  // const [submit , setSubmit] = useState(true);
+  //  window.addEventListener( "resize",()=>{
+  //        if(window.innerWidth <= "600"){
+  //           setSize(false)      
+  //        }
+  //        else{
+  //         setSize(true)
+  //        }
+         
+  //    console.log("window size----------->", window.innerWidth );
+  //  })
   // ==============================
   // =================== chat value
 
   let messageId = "";
   let submit = false;
   const submitChat = async () => {
+    setGetMessage([]);
     console.log("CHAT VALUE", chatValue);
     const currentUserId = auth.currentUser.uid;
     const sendUserId = localStorage.getItem("selectUserId");
@@ -61,8 +76,9 @@ export const Chat = () => {
     });
     console.log("Document written with ID: ", docRef.id);
     submit = true;
+
     getChat(messageId);
-    setGetMessage([getMessage]);
+    setGetMessage([]);
     setChatValue("");
   };
   // ====================================================
@@ -73,39 +89,24 @@ export const Chat = () => {
   //=============== select user===============
   // =========================================
   let getMessageUserId = "";
-
   const setUserMessage = [];
+  // let localStorageGetId = "";
   const selectUser = async (selectuserId) => {
-    console.log(selectuserId);
     localStorage.setItem("selectUserId", selectuserId);
-    const currentUserId = auth.currentUser.uid;
-    if (selectuserId > currentUserId) {
-      getMessageUserId = selectuserId + currentUserId;
-    } else {
-      getMessageUserId = currentUserId + selectuserId;
-    }
-    getChat(getMessageUserId);
-    // const q = query(
-    //   collection(db, "messages"),
-    //   where("messageId", "==", getMessageUserId),
-    //   orderBy("timestamp")
+    console.log("select id ", selectId);
+    console.log("check id ", selectuserId);
 
-    // );
-    // const unsubscribe = onSnapshot(q, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === "added") {
-    //       console.log("New city: ", change.doc.data());
-    //       let getData = change.doc.data();
-    //       let setId = getData;
-    //       setId.senderId = selectuserId;
-    //       console.log(setId);
-    //       setUserMessage.push(setId);
-    //       setGetMessage(setUserMessage);
-    //     }
-    //   });
-    // });
-    // setGetMessage([]);
-    // console.log(getMessageUserId);
+    if (selectChat) {
+      console.log("ha mai hoon");
+      const currentUserId = auth.currentUser.uid;
+      if (selectuserId > currentUserId) {
+        getMessageUserId = selectuserId + currentUserId;
+      } else {
+        getMessageUserId = currentUserId + selectuserId;
+      }
+      setGetMessage("");
+      getChat(getMessageUserId);
+    }
   };
 
   // =============================
@@ -155,6 +156,7 @@ export const Chat = () => {
   //  =============================== get chat
   // ========================================
   const getChat = (getMessageUserId) => {
+    // setGetMessage("")
     const q = query(
       collection(db, "messages"),
       where("messageId", "==", getMessageUserId),
@@ -163,54 +165,45 @@ export const Chat = () => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
-          console.log("New city:", change.doc.data());
-          let getData = change.doc.data();
-          setUserMessage.push(getData);
-          setGetMessage((prev) => [...prev, getData]);
-          // console.log("id checked " , selectuserId);
+          console.log("New city:", change);
+          setUserMessage.push(change.doc.data());
+          setGetMessage((...prev) => [...prev, ...setUserMessage]);
         }
       });
-      // setGetMessage(setUserMessage);
-      // console.log("a raha hai ya nahi state", getMessage);
     });
   };
-
 
   useEffect(() => {
     getUsers();
     getSingleUser();
   }, []);
-
- useEffect(() => {
-   // 👇️ scroll to bottom every time messages change
-  topToBottom.current?.scrollIntoView({ behavior: "smooth" });
- }, [getMessage]);
   useEffect(() => {
-    if (submit) {
-      console.log("submit");
-      getChat(messageId);
+    if (topToBottom.current) {
+      topToBottom.current.scrollTop =
+        topToBottom.current.scrollHeight - topToBottom.current.clientHeight;
     }
-  }, [submitChat]);
+  }, [selectUser]);
+
   console.log({ getMessage });
   return (
     <>
       <Row className="ms-2 mt-2 me-2 ">
-        <Col span={12} className="border-2">
+        <Col span={12} className="border-2 ">
           <Card>
             <Row align="middle" className="shadow-sm h-20">
-              <Col span={3}>
+              <Col className="w-[70px]">
                 <div className="w-[60px] h-[60px] rounded-full border-2">
                   <img src={LOGO} alt="" />
                 </div>
               </Col>
-              <Col span={16}>
+              <Col className="w-[30%]">
                 <span className=" font-bold cursor-pointer">
                   {singleUserData.email}
                 </span>
               </Col>
             </Row>
           </Card>
-          <Card className="h-[400px] overflow-scroll">
+          <Card className="h-[400px] overflow-y-scroll ">
             {chatUserList.map((value, index) => (
               <Row
                 align="middle"
@@ -218,12 +211,12 @@ export const Chat = () => {
                 key={value.userId}
                 onClick={() => selectUser(value.userId)}
               >
-                <Col span={3}>
+                <Col className="w-[70px]">
                   <div className="w-[60px] h-[60px] rounded-full border-2">
                     <img src={LOGO} alt="" />
                   </div>
                 </Col>
-                <Col span={16}>
+                <Col className="w-[30%]">
                   <span className="font-bold cursor-pointer">
                     {value.email}
                   </span>
@@ -233,19 +226,15 @@ export const Chat = () => {
           </Card>
         </Col>
         {/*==================== second card ==================*/}
-
-        <Col span={12} className="border-2 relative ">
-          <div className="h-[515px] overflow-scroll" ref={topToBottom}>
-            <Row>
-              {getMessage.length  > 0 ?(
+      {console.log(size)}
+       {
+       size && (<Col span={12} className="border-2 relative ">
+          <div className="h-[515px] overflow-y-scroll mb-2 " ref={topToBottom}>
+            <Row className="p-2">
+              {getMessage.length > 0 ? (
                 <>
                   {getMessage.map((value, index) => (
                     <>
-                      {console.log({
-                        value,
-                        currentUser: auth.currentUser.uid,
-                        sender: value.messageSender,
-                      })}
                       {auth.currentUser.uid !== value.messageSender && (
                         <Col span={24} className="h-fit " key={index}>
                           <div className="ms-2 mt-2 w-[50%]">
@@ -267,8 +256,9 @@ export const Chat = () => {
                     </>
                   ))}
                 </>
-                
-              ) : (<Col>not found</Col>) }
+              ) : (
+                <Col>not found</Col>
+              )}
             </Row>
           </div>
           <Row align="bottom" className="">
@@ -277,17 +267,12 @@ export const Chat = () => {
                 value={chatValue}
                 onChange={(e) => setChatValue(e.target.value)}
               />
-              <Button
-                className="w-[70px] ms-2"
-                onClick={() => {
-                  submitChat();
-                }}
-              >
+              <Button className="w-[70px] ms-2" onClick={() => submitChat()}>
                 <IoMdSend className="m-auto" />
               </Button>
             </Col>
           </Row>
-        </Col>
+        </Col>)}
       </Row>
     </>
   );
