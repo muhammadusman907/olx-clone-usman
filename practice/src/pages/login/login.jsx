@@ -8,7 +8,8 @@ import { GiTigerHead } from "react-icons/gi";
 const Login = () => {
   return (
     <>
-      <Navbar>
+    <Navbar/>
+      {/* <Navbar>
         <ul className="flex justify-between items-center h-[60px] ps-4 pe-4">
           <li >
               <GiTigerHead className="text-primary text-3xl"/>
@@ -22,7 +23,7 @@ const Login = () => {
             </Link>
           </li>
         </ul>
-      </Navbar>
+      </Navbar> */}
     </>
   );
 };
