@@ -8,28 +8,11 @@ const App = () => {
   return (
     
     <> 
-    <Theme >
+    <Theme>
       <AppRouter />
     </Theme>
     </>
-    // <ConfigProvider
-    //   theme={{
-    //     token: {
-    //       // Seed Token
-
-    //       colorPrimary: "#4a5759",
-    //       borderRadius: 2,
-
-    //       // Alias Token
-    //       colorBgContainer: "#f6ffed",
-    //     },
-    //   }}
-    // >
-
-    //     <AppRouter />
-
-    // </ConfigProvider>
- 
+  
   );
 };
 export default App;

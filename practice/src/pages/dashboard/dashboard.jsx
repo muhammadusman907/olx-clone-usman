@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   return (
     <>
-    {console.log("card data ------------>", cardData)}
+      {console.log("card data ------------>", cardData)}
 
       <Navbar />
 
@@ -77,7 +77,7 @@ const Dashboard = () => {
               types="text"
               registers={register}
             />
-            <div >
+            <div>
               <UploadInput
                 names="image"
                 controls={control}
@@ -91,25 +91,31 @@ const Dashboard = () => {
             </div>
             <Button type="submit" btnName="Submit" classAdd="w-[200px] mt-3" />
           </form>
-          <div className="w-[30%] ms-3">
-            <div className="bg-secondary h-[150px] w-[100%]  me-2">
-              <div className="border-2 flex items-center">
-                <div className="h-[60px] w-[60px] rounded-full bg-primary">
+          {/*
+          //    ============================================= 
+           =================== USER INFORMATION =====================
+                ============================================== // */}
+          <div className="w-[25%] ms-3">
+            <div className="bg-secondary h-[150px] w-[100%] me-2">
+              <div className="flex items-end h-[70px]">
+                <div className="h-[60px] w-[60px] rounded-full bg-primary ms-6 mt-4">
                   <img
                     className="h-[60px] w-[60px] rounded-full object-cover"
                     src={CardImage}
                     alt=""
                   />
                 </div>
-                <p>User Name</p>
+                <p className="ps-2">User Name</p>
               </div>
               <div className="flex justify-center">
                 <Button btnName="Show All Card" classAdd="w-[80%] mt-4 " />
               </div>
             </div>
-            <Card classAdd="bg-secondary mt-3 w-[300px] h-[300px]" 
-            
-            />
+            {/*
+          //    ============================================= 
+                =================== CARD =====================
+                ============================================== // */}
+            <Card classAdd="bg-secondary mt-3 w-[100%] h-[300px]" />
           </div>
         </div>
       </div>
