@@ -2,11 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-.upload-btn   {
-        background-color:#fff !important ;
+
+.upload-btn {
+  background-color: #fff !important ;
+}
+div:where(.swal2-container) button:where(.swal2-styled):not([disabled]) {
+  width: 200px;
+  background-color: #4a5759;
+}
+.loader {
+  background-color: rgba(0, 0, 0, 0.1);
+
+}
+.loader-child{
+    background-color:rgba(153, 150, 150, 0.3);
+
 }

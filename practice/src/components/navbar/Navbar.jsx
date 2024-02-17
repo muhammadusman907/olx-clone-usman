@@ -3,27 +3,52 @@ import Button from "../../components/button/Button.jsx";
 import { MdDashboard } from "react-icons/md";
 import { GiTigerHead } from "react-icons/gi";
 import { IoHomeSharp } from "react-icons/io5";
+import { SiGnuprivacyguard } from "react-icons/si";
+import { CgProfile } from "react-icons/cg";
+import { useContext } from "react";
+import Auth from "../../context/AuthProvider.jsx";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase.js";
 const Navbar = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  const { isLogin } = useContext(Auth);
+  // console.log("Navbar", isLogin);
+  const logOut = () => {
+    signOut(auth);
+  };
 
   const elementName = {
     "/": {
-      btnName: "login",
-      link: "/login",
+      btnName: isLogin ? "Logout" : "Login",
+      link: !isLogin && "/login",
       pageName: "Dashboard",
       pageLink: "/dashboard",
       iconName: <IoHomeSharp />,
+      btnIcon: !isLogin && <SiGnuprivacyguard />,
     },
-    "/login": { btnName: "SignUp", link: "/signup" },
+    "/login": {
+      btnName: "SignUp",
+      link: "/signup",
+      btnIcon: <SiGnuprivacyguard />,
+    },
     "/dashboard": {
       btnName: "Profile",
-      link: "profile",
+      link: `${pathname}/profile`,
       pageName: "Home",
       pageLink: "/",
       iconName: <MdDashboard />,
+      btnIcon: <CgProfile />,
     },
-    "/signup": { btnName: "Login", link: "/login" },
+    "/signup": {
+      btnName: "Login",
+      link: "/login",
+      btnIcon: <SiGnuprivacyguard />,
+    },
+    "/dashboard/profile": {
+      pageName: "Dashboard",
+      pageLink: "/dashboard",
+      iconName: <MdDashboard />,
+    },
   };
 
   return (
@@ -31,7 +56,9 @@ const Navbar = () => {
       <div className="bg-secondary h-auto w-full ">
         <ul className="flex justify-between items-center h-[60px] ps-4 pe-4">
           <li>
-            <GiTigerHead className="text-primary text-3xl" />
+            <Link to="/">
+              <GiTigerHead className="text-primary text-3xl" />
+            </Link>
           </li>
           <li className="flex items-center">
             <Link
@@ -41,9 +68,18 @@ const Navbar = () => {
               {elementName[pathname].iconName}
               {elementName[pathname].pageName}
             </Link>
-            <Link to={elementName[pathname].link}>
-              <Button btnName={elementName[pathname].btnName} />
-            </Link>
+            {elementName[pathname].btnName && (
+              <Link to={elementName[pathname].link}>
+                <Button
+                  onClick={() => {
+                    elementName[pathname].btnName === "Logout" && logOut();
+                  }}
+                  classAdd="flex items-center justify-center gap-1"
+                  btnName={elementName[pathname].btnName}
+                  btnIcons={elementName[pathname].btnIcon}
+                />
+              </Link>
+            )}
           </li>
         </ul>
       </div>

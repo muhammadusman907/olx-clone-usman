@@ -1,21 +1,23 @@
 import { Button, ConfigProvider, Space } from "antd";
 const Theme = ({ children }) => {
-    console.log(children);
+    // console.log(children);
 
- return (<ConfigProvider
-    theme={{
-      token: {
-        // Seed Token
+ return (
+   <ConfigProvider
+     theme={{
+       token: {
+         // Seed Token
 
-        colorPrimary: "#4a5759",
-        borderRadius: 2,
+         colorPrimary: "#388087",
+         borderRadius: 2,
 
-        // Alias Token
-        colorBgContainer: "#f6ffed",
-      },
-    }}
-  >
-    {children}
-  </ConfigProvider>)
+         // Alias Token
+         colorBgContainer: "#F6F6F2",
+       },
+     }}
+   >
+     {children}
+   </ConfigProvider>
+ );
 };
 export default Theme;

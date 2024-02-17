@@ -1,12 +1,12 @@
 import CardImage from "../../assets/images/car.jpg"
-const Card = ({classAdd}) => {
-    
+const Card = ({classAdd , productData}) => {
+    console.log("card data------->" , productData.ProductImage);
     return (
       <>
         <div className={`rounded overflow-hidden shadow-lg ${classAdd}`}>
           <img
             className="w-full h-[150px] object-cover "
-            src={CardImage}
+            src={productData.ProductImage}
             alt="Sunset in the mountains"
           />
           <div className="px-6 py-4">
@@ -17,7 +17,6 @@ const Card = ({classAdd}) => {
               exercitationem praesentium nihil.
             </p>
           </div>
-         
         </div>
       </>
     );
