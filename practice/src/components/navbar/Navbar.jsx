@@ -49,6 +49,14 @@ const Navbar = () => {
       pageLink: "/dashboard",
       iconName: <MdDashboard />,
     },
+    "/single_product": {
+      btnName: isLogin ? "Logout" : "Login",
+      link: !isLogin && "/login",
+      pageName: "Dashboard",
+      pageLink: "/dashboard",
+      iconName: <IoHomeSharp />,
+      btnIcon: !isLogin && <SiGnuprivacyguard />,
+    },
   };
 
   return (

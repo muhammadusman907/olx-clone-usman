@@ -21,29 +21,43 @@ const App = () => {
   const [userData, setUserData] = useState({});
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(Object.keys(userData).length);
+  const [currentUserId, setCurrentUserId] = useState("");
+  // console.log(Object.keys(userData).length);
 
   const getProductIsLogin = async () => {
     try {
       if (Object.keys(userData).length !== 0) {
+        let products = [];
         const q = query(
           collection(db, "products"),
-          where("userName.userId", "==", userData.userId)
+          where("userName.userId", "!=", userData.userId)
         );
         const querySnapshot = await getDocs(q);
-        let products = [];
+
         querySnapshot.forEach(async (doc) => {
           // console.log(doc.id, " => ", doc.data());
           products.push({ ...doc.data, id: doc.id });
           console.log("user login--------->", products);
-          setProductList(products);
-          setIsLogin(false);
         });
+        setProductList(products);
+        setIsLogin(false);
       }
     } catch (error) {
       console.error("Error getting products: ", error);
     } finally {
       setLoading(false);
+    }
+  };
+  const getUser = async () => {
+    const uid = user.uid;
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      setUserData(() => docSnap.data());
+      setIsLogin(true);
+    } else {
+      console.log("No such document!");
     }
   };
 
@@ -53,23 +67,14 @@ const App = () => {
       async (user) => {
         console.log(user);
         if (user) {
-          const uid = user.uid;
-          const docRef = doc(db, "users", uid);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-            setUserData(() => docSnap.data());
-            setIsLogin(true);
-          } else {
-            console.log("No such document!");
-          }
+          setCurrentUserId(user.uid);
         } else {
           setIsLogin(false);
         }
       },
       []
     );
-  }, []);
+  },[]);
   const getProduct = async () => {
     if (!isLogin) {
       try {
@@ -77,10 +82,10 @@ const App = () => {
         const querySnapshot = await getDocs(collection(db, "products"));
         querySnapshot.forEach(async (doc) => {
           // console.log(doc.id, " => ", doc.data());
-          products.push( {...doc.data(), userId : doc.id});
-          // console.log("user not login ---------->", products);
-          setProductList(products);
+          products.push({ ...doc.data(), productId: doc.id });
+          console.log("user not login ---------->", products);
         });
+        setProductList(products);
         setIsLogin(false);
       } catch (error) {
         console.error("Error getting products: ", error);
@@ -94,7 +99,7 @@ const App = () => {
   }, [isLogin]);
   useEffect(() => {
     getProductIsLogin();
-  }, [userData]);
+  }, []);
   return (
     <>
       <Auth.Provider value={{ isLogin, userData, productList, loading }}>

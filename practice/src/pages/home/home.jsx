@@ -8,6 +8,8 @@ import Card from "../../components/card/Card.jsx";
 import { useContext } from "react";
 import Auth from "../../context/AuthProvider.jsx";
 import Loader from "../../components/loader/Loader.jsx";
+// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   collection,
   query,
@@ -21,6 +23,7 @@ import {
 } from "../../config/firebase.js";
 const Home = () => {
   const { isLogin, userData, productList, loading } = useContext(Auth);
+  const navigate = useNavigate();
   const { control } = useForm({
     defaultValues: {
       firstName: "",
@@ -60,19 +63,22 @@ const Home = () => {
       </Row>
       <Row justify={"center"}>
         <Col lg={24} className="flex flex-wrap">
-          {productList.map((value , ) => (
-            <Card key={value.userId} classAdd="w-[18rem] ms-5 mt-5" productData={value} />
+          {productList.map((value, index) => (
+            <Card
+              onClick={() => {
+                navigate(`/single_product?productId=${value.productId}`);
+                console.log("card onclick------->", value.productId);
+              }}
+              imgAddClass = "object-cover"
+              key={value?.productId}
+              classAdd="w-[18rem] ms-5 mt-5"
+              productData={value}
+              images={value?.ProductImage}
+              names={value?.productName}
+              prices={`Rs:${value?.price}`}
+              descriptions={`${value?.description?.slice(0, 50)}.......`}
+            />
           ))}
-          {/* <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" />
-          <Card classAdd="w-[23%] ms-5 mt-5" /> */}
         </Col>
       </Row>
     </>
