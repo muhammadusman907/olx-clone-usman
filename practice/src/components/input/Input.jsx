@@ -17,15 +17,17 @@ const MyInput = ({
   types,
   messages,
   disabled,
+  defaultValue
 }) => {
   // console.log("messages ---------------->", messages);
   return (
     <>
-     {label && <label htmlFor={names}>{ label}:</label>}
+      {label && <label htmlFor={names}>{label}:</label>}
       <Controller
         name={names} // Specify the field name
         control={controls} // Pass control prop
         rules={{ required: errors }}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <Input
             disabled={disabled}

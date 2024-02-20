@@ -23,6 +23,15 @@ import {
 } from "../../config/firebase.js";
 const Home = () => {
   const { isLogin, userData, productList, loading } = useContext(Auth);
+
+  const productotherUser = productList.filter(
+    (value) => value.userName.userId !== userData.userId
+  ); 
+   const isLoginProductData = {
+     renderData : userData ? productotherUser : productList , 
+
+  }
+  console.log("otther user data ----> " , productotherUser)
   const navigate = useNavigate();
   const { control } = useForm({
     defaultValues: {
@@ -30,8 +39,8 @@ const Home = () => {
       select: {},
     },
   });
-  console.log("home page", productList);
-  console.log("home page loading", loading);
+  // console.log("home page", productList);
+  // console.log("home page loading", loading);
 
   return (
     <>
@@ -63,13 +72,13 @@ const Home = () => {
       </Row>
       <Row justify={"center"}>
         <Col lg={24} className="flex flex-wrap">
-          {productList.map((value, index) => (
+          {isLoginProductData.renderData.map((value, index) => (
             <Card
               onClick={() => {
                 navigate(`/single_product?productId=${value.productId}`);
                 console.log("card onclick------->", value.productId);
               }}
-              imgAddClass = "object-cover"
+              imgAddClass="object-cover"
               key={value?.productId}
               classAdd="w-[18rem] ms-5 mt-5"
               productData={value}

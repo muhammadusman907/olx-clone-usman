@@ -57,6 +57,14 @@ const Navbar = () => {
       iconName: <IoHomeSharp />,
       btnIcon: !isLogin && <SiGnuprivacyguard />,
     },
+    "/chat": {
+      btnName: isLogin ? "Logout" : "Login",
+      link: !isLogin && "/login",
+      pageName: "Dashboard",
+      pageLink: "/dashboard",
+      iconName: <IoHomeSharp />,
+      btnIcon: !isLogin && <SiGnuprivacyguard />,
+    },
   };
 
   return (

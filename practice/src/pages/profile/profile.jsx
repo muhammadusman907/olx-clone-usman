@@ -5,10 +5,13 @@ import { useForm } from "react-hook-form";
 import CAR from "../../assets/images/car.jpg";
 import { FaUserEdit } from "react-icons/fa";
 import { useRef } from "react";
+import { useContext } from "react";
+import Auth from "../../context/AuthProvider.jsx";
 const Profile = () => {
-  const { control } = useForm();
+  const {userData} = useContext(Auth);
+  const { control , defaultValue } = useForm();
+  
   const ref = useRef();
-
   const edit = () => {
     console.log(ref.current);
     ref.current.click();
@@ -51,8 +54,10 @@ const Profile = () => {
                 label="Your Name"
                 types="text"
                 disabled={true}
+                defaultValue={userData.username}
               />
               <MyInput
+                value={userData.email}
                 names="email"
                 controls={control}
                 placeholders="email@gmail.com"
@@ -61,6 +66,7 @@ const Profile = () => {
                 label="Your Email"
                 types="text"
                 disabled={true}
+                defaultValue={userData.email}
               />
               <MyInput
                 names="password"

@@ -14,9 +14,6 @@ const AppRouter = () => {
 
   // console.log({ pathname });
 
- 
-
-  
   return (
     <Routes>
       <Route path="/" element={<Home />}></Route>
@@ -39,7 +36,7 @@ const AppRouter = () => {
       <Route path="/single_product" element={<Single_product />}></Route>
       <Route
         path="/chat"
-        element={isLogin ? <Navigate to="/login" /> : <Chat />}
+        element={isLogin ?<Navigate to="/login" /> : <Chat /> }
       ></Route>
     </Routes>
   );
