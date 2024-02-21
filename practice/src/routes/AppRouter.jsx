@@ -36,7 +36,7 @@ const AppRouter = () => {
       <Route path="/single_product" element={<Single_product />}></Route>
       <Route
         path="/chat"
-        element={isLogin ?<Navigate to="/login" /> : <Chat /> }
+        element={isLogin ? <Chat /> : <Navigate to="/login" />}
       ></Route>
     </Routes>
   );

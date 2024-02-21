@@ -55,7 +55,7 @@ const Single_product = () => {
               <Button btnName="phone number" />
               <Button btnName="Chat" onClick={
                 ()=> {
-                  navigate("/chat")
+                  navigate(`/chat?id=${singleProduct[0]?.userName?.userId}`);
                 }
               } />
             </div>
