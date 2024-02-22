@@ -33,15 +33,14 @@ const Home = () => {
   }
   console.log("otther user data ----> " , productotherUser)
   const navigate = useNavigate();
-  const { control } = useForm({
+  const { control , formState: {errors}} = useForm({
     defaultValues: {
       firstName: "",
       select: {},
     },
   });
   // console.log("home page", productList);
-  // console.log("home page loading", loading);
-
+  // console.log("home page loading", loading)
   return (
     <>
       <Navbar />
@@ -56,6 +55,7 @@ const Home = () => {
             classAdd="h-[45px]"
             label=""
             types="text"
+            messages={errors}
           />
         </Col>
         <Col lg={10}>
@@ -66,6 +66,7 @@ const Home = () => {
             errors="select is required"
             classAdd="h-[45px]"
             label=""
+            messages={errors}
             types="text"
           />
         </Col>
