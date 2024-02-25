@@ -1,8 +1,0 @@
-.my-shadow {
-    box-shadow: rgba(127, 130, 134, 0.25) 0px 1px 1px, rgba(120, 122, 125, 0.13) 0px 0px 1px 1px;
-}
-.image-card
-  :where(.css-dev-only-do-not-override-1qhpsh8).ant-card
-  .ant-card-body {
-    padding: 0px;
-}

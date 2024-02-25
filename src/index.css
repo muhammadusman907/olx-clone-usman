@@ -1,68 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-*{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.App{
-    text-align: start !important;
+.upload-btn {
+  background-color: #fff !important ;
 }
-.text-primary{
-       height: 60px !important;
-       width:60px !important ;
+div:where(.swal2-container) button:where(.swal2-styled):not([disabled]) {
+  width: 200px;
+  background-color: #4a5759;
 }
+.loader {
+  background-color: rgba(0, 0, 0, 0.1);
 
-:where(.css-dev-only-do-not-override-1qhpsh8).ant-modal-root .ant-modal-mask{
-    background-color: black;
-    background-color: rgba(0, 0, 0, 0.08);
-    /* opacity: 0; */
 }
-:where(.css-dev-only-do-not-override-1qhpsh8).ant-modal .ant-modal-content{
-    padding : 0 ;
+.loader-child{
+    background-color:rgba(153, 150, 150, 0.3);
+
 }
-
-
-
-/* width */
-::-webkit-scrollbar {
-	width: 10px;
+.my-shadow{
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
-
-/* Track */
-::-webkit-scrollbar-track {
-	background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: #888;
-	border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: #555;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
