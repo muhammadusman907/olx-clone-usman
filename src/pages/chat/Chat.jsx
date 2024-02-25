@@ -44,6 +44,7 @@ const Chat = () => {
       console.log("user data message:", docSnap.data());
     } else {
       console.log("No such document!");
+      console.log("check!");
     }
   };
   const getUsers = async () => {
