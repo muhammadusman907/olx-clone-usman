@@ -33,6 +33,7 @@ const Chat = () => {
   const { control, handleSubmit, reset } = useForm();
   const [senderUser, setSenderUser] = useState({});
   const [messageRender, setMessageRender] = useState([]);
+  const [chatRoom , setChatRoom] = useState({});
   const [searchParams] = useSearchParams();
   const ref = useRef();
   const senderUserId = searchParams.get("id");
@@ -48,10 +49,14 @@ const Chat = () => {
     }
   };
   const getUsers = async () => {
-    console.log("message", messageRender);
-    const querySnapshot = await getDocs(collection(db, "chatUser"));
+    const q = query(
+      collection(db, "chatUser"),
+      where("currentUserData.userId", "==", userData.userId)
+    );
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log( "users", doc.data());
+      console.log("user", " => ", doc.data());
+      setChatRoom(doc.data())
     });
   };
   useEffect(() => {
@@ -82,6 +87,7 @@ const Chat = () => {
           senderUserData: { ...senderUser },
           timestamp: serverTimestamp(),
           currentUserData: { ...userData },
+          margeTwoUserId
         });
       }
     });
@@ -132,7 +138,7 @@ const Chat = () => {
                 </div>
                 <div className="ps-2">
                   <p className="font-bold text-[1rem]">{}</p>
-                  <p className="text-[gray]">last messaage</p>
+                  <p className="text-[gray]">{chatRoom?.senderUserData?.username}</p>
                 </div>
               </div>{" "}
             </Col>
