@@ -116,8 +116,6 @@ const Dashboard = () => {
      ...data,
      productImage:ImageUrl,
      productUserData:{...userData}
-     
-
     });
 
     // ===================

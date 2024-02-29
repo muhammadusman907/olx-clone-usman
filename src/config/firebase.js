@@ -26,6 +26,8 @@ import {
   serverTimestamp,
   onSnapshot,
   orderBy,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { getDatabase, set } from "firebase/database";
 const firebaseConfig = {
@@ -71,4 +73,6 @@ export {
   orderBy,
   database,
   set,
+  updateDoc,
+  arrayUnion,
 };

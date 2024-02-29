@@ -25,6 +25,8 @@ import {
   orderBy,
   getDocs,
   setDoc,
+  arrayUnion,
+  updateDoc,
 } from "../../config/firebase.js";
 import { useSearchParams } from "react-router-dom";
 
@@ -33,7 +35,7 @@ const Chat = () => {
   const { control, handleSubmit, reset } = useForm();
   const [senderUser, setSenderUser] = useState({});
   const [messageRender, setMessageRender] = useState([]);
-  const [chatRoom , setChatRoom] = useState({});
+  const [chatRoom, setChatRoom] = useState([]);
   const [searchParams] = useSearchParams();
   const ref = useRef();
   const senderUserId = searchParams.get("id");
@@ -49,14 +51,18 @@ const Chat = () => {
     }
   };
   const getUsers = async () => {
+  
+    console.log("user id ---------->", userData.userId);
     const q = query(
       collection(db, "chatUser"),
-      where("currentUserData.userId", "==", userData.userId)
+      where(`userId`, "==", userData.userId)
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
+      // chatUserArr.push(doc.data()?.users);
       console.log("user", " => ", doc.data());
-      setChatRoom(doc.data())
+
+      setChatRoom(doc.data()?.users);
     });
   };
   useEffect(() => {
@@ -71,6 +77,7 @@ const Chat = () => {
     margeTwoUserId = userData.userId + senderUserId;
   }
   console.log(margeTwoUserId);
+
   const onSubmit = async (data) => {
     const docRef = await addDoc(collection(db, "messages"), {
       senderUserData: { ...senderUser },
@@ -81,16 +88,38 @@ const Chat = () => {
       margeTwoUserId,
       chatUser: true,
     });
-    messageRender.forEach(async (value) => {
-      if (value?.chatUser !== true) {
-        await setDoc(doc(db, "chatUser", senderUserId), {
-          senderUserData: { ...senderUser },
-          timestamp: serverTimestamp(),
-          currentUserData: { ...userData },
-          margeTwoUserId
-        });
-      }
+
+    const senderUserRef = doc(db, "chatUser", senderUserId);
+    // Atomically add a new region to the "regions" array field.
+    await updateDoc(senderUserRef, {
+      timestamp: serverTimestamp(),
+      ...senderUser,
+      users: arrayUnion({ ...userData }),
     });
+    const currentUserRef = doc(db, "chatUser", userData.userId);
+    // Atomically add a new region to the "regions" array field.
+    await updateDoc(currentUserRef, {
+      ...userData,
+      timestamp: serverTimestamp(),
+      users: arrayUnion({ ...senderUser }),
+    });
+    // const uniqueUsers = new Set();
+    // messageRender.forEach(async (value) => {
+    //   if (value?.chatUser !== true) {
+    //      uniqueUsers.add({ ...userData });
+    //     const uniqueUsersArray = Array.from(uniqueUsers);
+    //     await setDoc(doc(db, "chatUser", senderUserId), {
+    //       timestamp: serverTimestamp(),
+    //       ...senderUser,
+    //       users: arrayUnion({ ...uniqueUsersArray }),
+    //     });
+    //     await setDoc(doc(db, "chatUser", userData.userId), {
+    //       ...userData,
+    //       timestamp: serverTimestamp(),
+    //       users: arrayUnion({ ...senderUser }),
+    //     });
+    //   }
+    // });
     console.log(data.message);
     reset();
   };
@@ -105,7 +134,7 @@ const Chat = () => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
-          console.log("New city: ", change.doc.data());
+          // console.log("New city: ", change.doc.data());
           allMessages.push(change.doc.data());
         }
       });
@@ -132,15 +161,20 @@ const Chat = () => {
           </Row>
           <Row>
             <Col className="w-full p-2">
-              <div className=" my-shadow mt-2 p-2 flex items-center">
-                <div className="h-[50px] w-[50px] my-shadow rounded-full">
-                  <FaUser className="w-full h-full rounded-full p-1" />
+              {chatRoom.map((value, index) =>
+                // console.log("chat room--------->", value)
+                <div className=" my-shadow mt-2 p-2 flex items-center">
+                  <div className="h-[50px] w-[50px] my-shadow rounded-full">
+                    <FaUser className="w-full h-full rounded-full p-1" />
+                  </div>
+                  <div className="ps-2">
+                    <p className="font-bold text-[1rem]">
+                      {value.username}
+                    </p>
+                    <p className="text-[gray]">{}</p>
+                  </div>
                 </div>
-                <div className="ps-2">
-                  <p className="font-bold text-[1rem]">{}</p>
-                  <p className="text-[gray]">{chatRoom?.senderUserData?.username}</p>
-                </div>
-              </div>{" "}
+              )}
             </Col>
           </Row>
         </Col>
@@ -158,7 +192,7 @@ const Chat = () => {
           <div ref={ref} className="overflow-y-scroll  h-[390px]">
             {messageRender.map((value) => (
               <>
-                {console.log({ value })}
+                {/* {console.log({ value })} */}
                 {value.currentUser === userData.userId ? (
                   <>
                     <div className="p-2 flex justify-start gap-2">
@@ -167,23 +201,25 @@ const Chat = () => {
                       </div>
                       <div className="w-[50%] h-auto">
                         <span className="bg-primary text-[white] p-2 rounded-l-md rounded-tr-md break-words">
-                          {value.message}
+                          {value.message && value.message}
                         </span>
                       </div>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="p-2 flex justify-end gap-2">
-                      <div className="w-[50%] h-auto relative">
-                        <span className="bg-[gray] text-[white] p-2 rounded-r-md rounded-tl-md break-words absolute right-0">
-                          {value.message}
-                        </span>
+                    {value.message && (
+                      <div className="p-2 flex justify-end gap-2">
+                        <div className="w-[50%] h-auto relative">
+                          <span className="bg-[gray] text-[white] p-2 rounded-r-md rounded-tl-md break-words absolute right-0">
+                            {value.message && value?.message}
+                          </span>
+                        </div>
+                        <div className="w-[50px] h-[50px] rounded-full my-shadow">
+                          <FaUser className="w-full h-full rounded-full p-1" />
+                        </div>
                       </div>
-                      <div className="w-[50px] h-[50px] rounded-full my-shadow">
-                        <FaUser className="w-full h-full rounded-full p-1" />
-                      </div>
-                    </div>
+                    )}
                   </>
                 )}
               </>

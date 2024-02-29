@@ -20,11 +20,11 @@ import Loader from "../../components/loader/Loader.jsx";
 import { emailRegex } from "../../components/constant/Constant.js";
 import { useState } from "react";
 const Signup = () => {
-    const [isLogin , setIsLogin ] = useState(false) ;
+  const [isLogin, setIsLogin] = useState(false);
 
   const onFinish = (values) => {
     const { email, password, username } = values;
-    setIsLogin(true)
+    setIsLogin(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -33,8 +33,13 @@ const Signup = () => {
           username,
           userId: user.uid,
         });
+        await setDoc(doc(db, "chatUser", user.uid), {
+          email,
+          username,
+          userId: user.uid,
+        });
         console.log("user signup----------->", user);
-        setIsLogin(false)
+        setIsLogin(false);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -61,7 +66,7 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-       {isLogin && <Loader />}
+      {isLogin && <Loader />}
       <Row className="w-full flex justify-center mt-5">
         <Col
           xs={20}
@@ -120,8 +125,8 @@ const Signup = () => {
               rules={[
                 {
                   required: true,
-                  message: "At Least 7 Character",
-                  pattern: /(?=.{7,40}$)/,
+                  message: "At Least 6 Character",
+                  pattern: /(?=.{6,40}$)/,
                 },
               ]}
             >
