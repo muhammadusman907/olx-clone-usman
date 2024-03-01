@@ -15,7 +15,7 @@ const Card = ({
     <>
       <div
         {...prop}
-        className={`rounded overflow-hidden shadow-lg ${classAdd}`}
+        className={`rounded overflow-hidden shadow-lg ${classAdd} cursor-pointer`}
       >
         <img
           className={`w-full h-[150px] ${imgAddClass}`}

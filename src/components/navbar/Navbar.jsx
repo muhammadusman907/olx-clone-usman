@@ -15,6 +15,8 @@ const Navbar = () => {
   // console.log("Navbar", isLogin);
   const logOut = () => {
     signOut(auth);
+    localStorage.removeItem("userData");
+    localStorage.removeItem("userId");
   };
 
   const elementName = {

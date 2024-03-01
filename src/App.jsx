@@ -17,40 +17,55 @@ import {
   getDocs,
 } from "./config/firebase.js";
 const App = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(
+    JSON.parse(localStorage.getItem("userData")) ? true : false
+  );
   const [userData, setUserData] = useState({});
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState("");
   // console.log(Object.keys(userData).length);
-
+  console.log({ isLogin });
+  const userIds = localStorage.getItem("userId");
+  console.log({ userIds });
   const getUser = async () => {
-    const uid = currentUserId;
-    if (uid) {
-      const docRef = doc(db, "users", uid);
+    if (userIds) {
+      const docRef = doc(db, "users", userIds);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
-        setIsLogin(true);
+        localStorage.setItem("userData", JSON.stringify(docSnap.data()));
         setUserData(() => docSnap.data());
+        // setIsLogin(true);
       } else {
         console.log("No such document!");
       }
     }
+    if (JSON.parse(localStorage.getItem("userData")) !== null) {
+      const local_storage_data = JSON.parse(localStorage.getItem("userData"));
+      console.log("local_storage_data  ------->", local_storage_data);
+      if (`userId` in local_storage_data) {
+        setIsLogin(true);
+      }
+    }
   };
-
   useEffect(() => {
     getUser();
-  }, [currentUserId]);
+  }, [userIds]);
   useEffect(() => {
     return onAuthStateChanged(
       auth,
       (user) => {
         console.log(user);
         if (user) {
+          console.log({ user });
           setCurrentUserId(user.uid);
+          localStorage.setItem("userId", user.uid);
         } else {
-          setIsLogin(false);
+          if (localStorage.getItem("userId") !== true) {
+            localStorage.setItem("hello", true);
+            setIsLogin(false);
+          }
         }
       },
       []

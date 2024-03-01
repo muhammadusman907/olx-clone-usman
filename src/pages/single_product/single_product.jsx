@@ -55,6 +55,10 @@ const Single_product = () => {
               <Button btnName="phone number" />
               <Button btnName="Chat" onClick={
                 ()=> {
+                  localStorage.setItem(
+                    "getChatId",
+                    singleProduct[0]?.productUserData?.userId
+                  );
                   navigate(`/chat?id=${singleProduct[0]?.productUserData?.userId}`);
                 }
               } />
