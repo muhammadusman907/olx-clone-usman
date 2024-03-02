@@ -8,6 +8,7 @@ import { useContext } from "react";
 import Auth from "../context/AuthProvider.jsx";
 import Single_product from "../pages/single_product/single_product.jsx";
 import Chat from "../pages/chat/Chat.jsx";
+import UserProduct from "../pages/user-product/UserProduct.jsx";
 const AppRouter = () => {
   const { isLogin } = useContext(Auth);
   const { pathname } = useLocation();
@@ -37,6 +38,10 @@ const AppRouter = () => {
       <Route
         path="/chat"
         element={isLogin ? <Chat /> : <Navigate to="/login" />}
+      ></Route>
+      <Route
+        path="/user-product"
+        element={isLogin ? <UserProduct/> : <Navigate to="/login" />}
       ></Route>
     </Routes>
   );

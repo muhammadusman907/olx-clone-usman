@@ -43,6 +43,8 @@ const Chat = () => {
     localStorage.setItem("getChatId", queryParamId);
   }
   const senderUserId = localStorage.getItem("getChatId");
+  console.log({ senderUserId });
+  // ********************************************************* //
   //------***** jis sa hum chat kar rha hai wo user ****-------//
   const getSenderUser = async (selectUserId) => {
     const userRef = doc(db, "users", selectUserId);
@@ -55,6 +57,8 @@ const Chat = () => {
       console.log("check!");
     }
   };
+  // **************************************************************** //
+  // <------------ jin sa mana chat kari hai wo users hai ----------> //
   const getUsers = async () => {
     // alert("ha");
     console.log("user id ---------->", userData.userId);
@@ -73,18 +77,23 @@ const Chat = () => {
     getSenderUser(senderUserId);
     getUsers();
   }, []);
-
+  // *************************************************************
+  // <------------------- marge users id ----------------------- //
   let margeTwoUserId = "";
   if (localStorage.getItem("getChatId") === queryParamId) {
     if (senderUserId > userData.userId) {
-      margeTwoUserId = senderUserId + userData.userId;
+      margeTwoUserId = senderUserId + localStorage.getItem("userId");
       localStorage.setItem("margeTwoUserId", margeTwoUserId);
     } else {
-      margeTwoUserId = userData.userId + senderUserId;
+      margeTwoUserId = localStorage.getItem("userId") + senderUserId;
       localStorage.setItem("margeTwoUserId", margeTwoUserId);
     }
   }
   console.log(margeTwoUserId);
+
+  // ********************************************************
+  // <--------- jis user ko mana select kia wo user -------->
+
   const selectUser = (selectUserId) => {
     // alert(selectUserId);
     localStorage.setItem("getChatId", selectUserId);
@@ -92,17 +101,21 @@ const Chat = () => {
     console.log("select user id--------->", selectUserId);
     if (getChatUserId > userData.userId) {
       margeTwoUserId = getChatUserId + userData.userId;
+      localStorage.setItem("margeTwoUserId", margeTwoUserId);
     } else {
       margeTwoUserId = userData.userId + getChatUserId;
+      localStorage.setItem("margeTwoUserId", margeTwoUserId);
     }
     console.log("margeuserid", margeTwoUserId);
 
-    getMessage(margeTwoUserId);
+    getMessage(localStorage.getItem("margeTwoUserId"));
     localStorage.setItem("margeTwoUserId", margeTwoUserId);
     getSenderUser(getChatUserId);
   };
-
+  //  **************************************************************
+  //  <---------- jab message submit hoga message store hoge ------>
   const onSubmit = async (data) => {
+    const margeTwoUserId = localStorage.getItem("margeTwoUserId");
     const docRef = await addDoc(collection(db, "messages"), {
       senderUserData: { ...senderUser },
       message: data.message,
@@ -112,41 +125,32 @@ const Chat = () => {
       margeTwoUserId,
       chatUser: true,
     });
-
-    const senderUserRef = doc(db, "chatUser", senderUserId);
-    // Atomically add a new region to the "regions" array field.
+    reset();
+    const currentUserRef = doc(db, "chatUser", userData.userId);
+    const senderUserRef = doc(
+      db,
+      "chatUser",
+      localStorage.getItem("getChatId")
+    );
+  // *****************************************************************************
+  //  ya user ko ja kar update karway ga or un user ko rakha ga jin sa cht hoi hai
     await updateDoc(senderUserRef, {
       timestamp: serverTimestamp(),
       ...senderUser,
       users: arrayUnion({ ...userData }),
     });
-    const currentUserRef = doc(db, "chatUser", userData.userId);
-    // Atomically add a new region to the "regions" array field.
+
+
     await updateDoc(currentUserRef, {
       ...userData,
       timestamp: serverTimestamp(),
       users: arrayUnion({ ...senderUser }),
     });
-    // const uniqueUsers = new Set();
-    // messageRender.forEach(async (value) => {
-    //   if (value?.chatUser !== true) {
-    //      uniqueUsers.add({ ...userData });
-    //     const uniqueUsersArray = Array.from(uniqueUsers);
-    //     await setDoc(doc(db, "chatUser", senderUserId), {
-    //       timestamp: serverTimestamp(),
-    //       ...senderUser,
-    //       users: arrayUnion({ ...uniqueUsersArray }),
-    //     });
-    //     await setDoc(doc(db, "chatUser", userData.userId), {
-    //       ...userData,
-    //       timestamp: serverTimestamp(),
-    //       users: arrayUnion({ ...senderUser }),
-    //     });
-    //   }
-    // });
+    localStorage.setItem("margeTwoUserId", margeTwoUserId);
     console.log(data.message);
-    reset();
   };
+  // ************************************************************
+  // <------------ message lekar ay ga firebase sa ------------->
   const getMessage = (userId) => {
     const q = query(
       collection(db, "messages"),

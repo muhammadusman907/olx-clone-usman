@@ -13,6 +13,13 @@ import { useState } from "react";
 import { Row, Col } from "antd";
 import Loader from "../../components/loader/Loader.jsx";
 import { useContext } from "react";
+import {
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import Auth from "../../context/AuthProvider.jsx";
 import {
   getStorage,
@@ -25,14 +32,17 @@ import {
   getDoc,
   doc,
 } from "../../config/firebase.js";
+// import Map from "../../components/map/Map.jsx";
 
 const storage = getStorage();
 const Dashboard = () => {
-  const {userData} = useContext(Auth);
+  const { userData } = useContext(Auth);
   const [cardData, setCardData] = useState({});
   const [ImageUrl, setImageUrl] = useState();
   const [loader, setLoader] = useState(false);
-  console.log("dashboard" ,  userData)
+  
+  console.log("dashboard", userData);
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -110,12 +120,10 @@ const Dashboard = () => {
     setLoader(true);
     console.log(ImageUrl);
     console.log(data);
-
-    
     const docRef = await addDoc(collection(db, "products"), {
-     ...data,
-     productImage:ImageUrl,
-     productUserData:{...userData}
+      ...data,
+      productImage: ImageUrl,
+      productUserData: { ...userData },
     });
 
     // ===================
@@ -204,19 +212,23 @@ const Dashboard = () => {
                 ============================================== // */}
         <Col lg={9} md={18} sm={20} xs={22}>
           <div className="w-full">
-            <div className="bg-secondary h-[150px] w-[100%] me-2 p-5">
+            <div className="bg-secondary h-[150px] w-[100%] me-2 p-3">
               <div className="flex items-center h-[70px]">
-                <div className="h-[60px] w-[60px] rounded-full bg-primary mt-4">
+                <div className="h-[60px] w-[60px] rounded-full bg-primary ">
                   <img
                     className="h-[60px] w-[60px] rounded-full object-cover"
-                    src={CardImage}
+                    src={userData?.photoUrl ? userData?.photoUrl : CardImage}
                     alt=""
                   />
                 </div>
-                <p className="ps-2">User Name</p>
+                <p className="ps-2 font-bold">{userData.username}</p>
               </div>
               <div className="">
-                <Button btnName="Show All Card" classAdd="w-[80%] mt-4" />
+                <Button
+                  btnName="Show my prorduct"
+                  classAdd="w-[80%] mt-4"
+                  onClick={() =>navigate("/user-product")}
+                />
               </div>
             </div>
             {/*
@@ -225,6 +237,7 @@ const Dashboard = () => {
                 ============================================== // */}
             {/* <Card classAdd="bg-secondary mt-3 w-[100%] h-[300px] md:hidden" />/ */}
           </div>
+          {/* <Map/> */}
         </Col>
       </Row>
     </>

@@ -17,6 +17,8 @@ const Navbar = () => {
     signOut(auth);
     localStorage.removeItem("userData");
     localStorage.removeItem("userId");
+    localStorage.removeItem("getChatId");
+    localStorage.removeItem("margeTwoUserId");
   };
 
   const elementName = {
@@ -67,6 +69,13 @@ const Navbar = () => {
       iconName: <IoHomeSharp />,
       btnIcon: !isLogin && <SiGnuprivacyguard />,
     },
+    "/user-product": {
+      btnName: "Profile",
+      link: `${pathname}/profile`,
+      pageName: "Home",
+      pageLink: "/",
+      iconName: <MdDashboard />,
+      btnIcon: <CgProfile />}
   };
 
   return (
