@@ -135,26 +135,26 @@ const UploadInput = ({
           rules={{ required: errors }}
           {...registers(names)}
           render={({ field }) => ( */}
-            <Upload
-              // {...field}
-              beforeUpload={() => true}
-              onChange={(e) =>
-                e.file.status !== "removed" &&
-                uploadImageStorage(e.file.originFileObj)
-              }
-              placeholder={placeholders}
-              className={`${classAdd} text-primary border-primary`}
-              listType="picture"
-              maxCount={1}
-            >
-              <Button
-                className="bg-default rounded-md h-[45px]"
-                icon={<UploadOutlined />}
-              >
-                Upload
-              </Button>
-            </Upload>
-          {/* )}
+        <Upload
+          // {...field}
+          beforeUpload={() => true}
+          onChange={(e) =>
+            e.file.status !== "removed" &&
+            uploadImageStorage(e.file.originFileObj)
+          }
+          placeholder={placeholders}
+          className={`${classAdd} text-primary border-primary`}
+          listType="picture"
+          maxCount={1}
+        >
+          <Button
+            className="bg-default rounded-md h-[45px]"
+            icon={<UploadOutlined />}
+          >
+            Upload
+          </Button>
+        </Upload>
+        {/* )}
         /> */}
       </div>
     </>

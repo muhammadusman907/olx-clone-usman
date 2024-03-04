@@ -6,7 +6,7 @@ import Button from "../../components/button/Button";
 import { AiFillDelete } from "react-icons/ai";
 import { MdEditSquare } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
-import Auth from "../../context/AuthProvider";
+import Auth from "../../context/authProvider";
 import Swal from "sweetalert2";
 
 import {
@@ -21,7 +21,7 @@ import {
   getStorage,
   ref,
   uploadBytesResumable,
-  getDownloadURL
+  getDownloadURL,
 } from "../../config/firebase";
 import { useForm } from "react-hook-form";
 import {
@@ -48,7 +48,7 @@ const UserProduct = () => {
     defaultValues: {},
   });
   // update product fuction
-console.log(updateProductId);
+  console.log(updateProductId);
   const uploadImage = (file) => {
     setLoader(true);
     return new Promise((resolve, reject) => {
@@ -111,7 +111,7 @@ console.log(updateProductId);
     console.log(ImageUrl);
     console.log(data);
     // const docRef = await addDoc(collection(db, "products",), {});
-    const productRef = doc(db, "products",updateProductId);
+    const productRef = doc(db, "products", updateProductId);
     await updateDoc(productRef, {
       ...data,
       productImage: ImageUrl,
@@ -119,13 +119,13 @@ console.log(updateProductId);
     });
     setLoader(false);
     reset();
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "update SuccessFully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "update SuccessFully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     setModal2Open(false);
   };
 

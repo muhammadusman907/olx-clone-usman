@@ -3,7 +3,7 @@ import Theme from "./components/theme/Theme.jsx";
 import Home from "./pages/home/home.jsx";
 import AppRouter from "./routes/AppRouter.jsx";
 import React, { useCallback, useEffect, useState } from "react";
-import Auth from "./context/AuthProvider.jsx";
+import Auth from "./context/authProvider.jsx";
 
 import {
   auth,

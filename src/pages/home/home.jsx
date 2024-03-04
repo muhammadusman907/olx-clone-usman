@@ -6,7 +6,7 @@ import { Row, Col } from "antd";
 import { useForm } from "react-hook-form";
 import Card from "../../components/card/Card.jsx";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/authProvider.jsx";
 import Loader from "../../components/loader/Loader.jsx";
 
 // import { useNavigate } from "react-router-dom";
@@ -42,19 +42,18 @@ const Home = () => {
       select: {},
     },
   });
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-const q = query(
-  collection(db, "products"),
-  where("category", "==", data.search_category)
-);
+    const q = query(
+      collection(db, "products"),
+      where("category", "==", data.search_category)
+    );
 
-const querySnapshot = await getDocs(q);
-querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-});
-    
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
   };
   // console.log("home page", productList);
   // console.log("home page loading", loading)

@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/authProvider.jsx";
 import {
   collection,
   addDoc,

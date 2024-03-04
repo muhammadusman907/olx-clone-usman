@@ -20,7 +20,7 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/authProvider.jsx";
 import {
   getStorage,
   ref,
@@ -40,7 +40,7 @@ const Dashboard = () => {
   const [cardData, setCardData] = useState({});
   const [ImageUrl, setImageUrl] = useState();
   const [loader, setLoader] = useState(false);
-  
+
   console.log("dashboard", userData);
   const navigate = useNavigate();
   const {
@@ -227,7 +227,7 @@ const Dashboard = () => {
                 <Button
                   btnName="Show my prorduct"
                   classAdd="w-[80%] mt-4"
-                  onClick={() =>navigate("/user-product")}
+                  onClick={() => navigate("/user-product")}
                 />
               </div>
             </div>
