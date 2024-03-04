@@ -1,7 +1,12 @@
 import React from "react";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider";
-import { RouterProvider, useLocation, useSearchParams ,useNavigate } from "react-router-dom";
+import Auth from "../../context/AuthProvider.jsx";
+import {
+  RouterProvider,
+  useLocation,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import { Row, Col } from "antd";
 import Card from "../../components/card/Card.jsx";
 import Button from "../../components/button/Button.jsx";
@@ -10,7 +15,7 @@ import { FaUser } from "react-icons/fa";
 
 const Single_product = () => {
   const { url, pathname, search } = useLocation();
-  const navigate = useNavigate() ;
+  const navigate = useNavigate();
   const { productList } = useContext(Auth);
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
@@ -53,15 +58,18 @@ const Single_product = () => {
             </div>
             <div className="flex flex-col gap-2 pt-2">
               <Button btnName="phone number" />
-              <Button btnName="Chat" onClick={
-                ()=> {
+              <Button
+                btnName="Chat"
+                onClick={() => {
                   localStorage.setItem(
                     "getChatId",
                     singleProduct[0]?.productUserData?.userId
                   );
-                  navigate(`/chat?id=${singleProduct[0]?.productUserData?.userId}`);
-                }
-              } />
+                  navigate(
+                    `/chat?id=${singleProduct[0]?.productUserData?.userId}`
+                  );
+                }}
+              />
             </div>
           </div>
           <div className="h-[130px] my-shadow mt-4">
