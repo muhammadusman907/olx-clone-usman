@@ -35,7 +35,7 @@ const Profile = () => {
     // setProfileImage(PhotoUrl);
     setLoader(true);
     console.log(file);
-    const storageRef = ref(storage, "profile_pictuer");
+    const storageRef = ref(storage, `profile_pictuer${userData.userId}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
       "state_changed",

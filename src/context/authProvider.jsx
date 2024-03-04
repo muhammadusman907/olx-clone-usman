@@ -1,7 +1,7 @@
-import { createContext  } from "react";
+import { createContext } from "react";
 
 const Auth = createContext();
 
 // console.log("auth provider -------->" , Auth);
- 
-export default Auth ;
+
+export default Auth;
