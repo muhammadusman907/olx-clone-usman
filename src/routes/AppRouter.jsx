@@ -41,7 +41,7 @@ const AppRouter = () => {
       ></Route>
       <Route
         path="/user-product"
-        element={isLogin ? <UserProduct/> : <Navigate to="/login" />}
+        element={isLogin ? <UserProduct /> : <Navigate to="/login" />}
       ></Route>
     </Routes>
   );
