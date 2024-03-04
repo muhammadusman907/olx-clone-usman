@@ -5,7 +5,7 @@ import Signup from "../pages/signup/signup.jsx";
 import Dashboard from "../pages/dashboard/dashboard.jsx";
 import Profile from "../pages/profile/profile.jsx";
 import { useContext } from "react";
-import Auth from "../context/AuthProvider.jsx";
+import Auth from "../context/authProvider.jsx";
 import Single_product from "../pages/single_product/single_product.jsx";
 import Chat from "../pages/chat/Chat.jsx";
 import UserProduct from "../pages/user-product/UserProduct.jsx";

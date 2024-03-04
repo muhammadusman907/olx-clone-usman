@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/authProvider.jsx";
 import {
   RouterProvider,
   useLocation,
