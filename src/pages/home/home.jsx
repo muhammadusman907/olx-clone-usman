@@ -42,19 +42,18 @@ const Home = () => {
       select: {},
     },
   });
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-const q = query(
-  collection(db, "products"),
-  where("category", "==", data.search_category)
-);
+    const q = query(
+      collection(db, "products"),
+      where("category", "==", data.search_category)
+    );
 
-const querySnapshot = await getDocs(q);
-querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-});
-    
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
   };
   // console.log("home page", productList);
   // console.log("home page loading", loading)
@@ -103,12 +102,12 @@ querySnapshot.forEach((doc) => {
               }}
               imgAddClass="object-cover"
               key={value?.productId}
-              classAdd="w-[18rem] ms-5 mt-5"
+              classAdd="w-[16rem] ms-5 mt-5"
               productData={value}
               images={value?.productImage}
               names={value?.title}
-              prices={`Rs:${value?.price}`}
-              descriptions={`${value?.description?.slice(0, 50)}.......`}
+              prices={`Rs ${value?.price}`}
+              descriptions={`${value?.description?.slice(0, 50)}...`}
             />
           ))}
         </Col>

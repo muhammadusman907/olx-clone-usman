@@ -10,22 +10,21 @@ const Card = ({
   imgAddClass,
   ...prop
 }) => {
-  
   return (
     <>
       <div
         {...prop}
-        className={`rounded overflow-hidden shadow-lg ${classAdd} cursor-pointer`}
+        className={`rounded overflow-hidden my-shadow ${classAdd} cursor-pointer`}
       >
         <img
-          className={`w-full h-[150px] ${imgAddClass}`}
+          className={`w-full h-[250px] ${imgAddClass}`}
           src={images}
           alt="Sunset in the mountains"
         />
         <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">{names}</div>
-          <p className=" font-bold text-[1.2rem]">{prices} </p>
-          <p className="text-gray-700 text-base">{descriptions}</p>
+          <p className=" font-bold text-[1.1rem]">{prices} </p>
+          <p className="text-[gray] text-base">{descriptions}</p>
+          <div className="font-bold text-[1rem] mb-2">{names}</div>
         </div>
       </div>
     </>
