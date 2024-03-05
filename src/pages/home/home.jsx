@@ -6,7 +6,7 @@ import { Row, Col } from "antd";
 import { useForm } from "react-hook-form";
 import Card from "../../components/card/Card.jsx";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/UserData.jsx";
 import Loader from "../../components/loader/Loader.jsx";
 
 // import { useNavigate } from "react-router-dom";

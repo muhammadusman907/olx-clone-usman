@@ -20,7 +20,7 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/UserData.jsx";
 import {
   getStorage,
   ref,

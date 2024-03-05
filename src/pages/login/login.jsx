@@ -13,7 +13,7 @@ import Loader from "../../components/loader/Loader.jsx";
 import { emailRegex } from "../../components/constant/Constant.js";
 import { useState } from "react";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/UserData.jsx";
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false);
   // ===========================================

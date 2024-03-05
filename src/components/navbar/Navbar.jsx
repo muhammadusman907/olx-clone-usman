@@ -6,7 +6,7 @@ import { IoHomeSharp } from "react-icons/io5";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/UserData.jsx";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase.js";
 const Navbar = () => {

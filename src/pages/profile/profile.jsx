@@ -6,7 +6,7 @@ import CAR from "../../assets/images/car.jpg";
 import { FaUserEdit } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { useContext } from "react";
-import Auth from "../../context/AuthProvider.jsx";
+import Auth from "../../context/UserData.jsx";
 import Loader from "../../components/loader/Loader.jsx";
 import Swal from "sweetalert2";
 import {

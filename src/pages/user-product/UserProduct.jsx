@@ -6,7 +6,7 @@ import Button from "../../components/button/Button";
 import { AiFillDelete } from "react-icons/ai";
 import { MdEditSquare } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
-import Auth from "../../context/AuthProvider";
+import Auth from "../../context/UserData";
 import Swal from "sweetalert2";
 
 import {
