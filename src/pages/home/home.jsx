@@ -8,7 +8,7 @@ import Card from "../../components/card/Card.jsx";
 import { useContext } from "react";
 import Auth from "../../context/UserData.jsx";
 import Loader from "../../components/loader/Loader.jsx";
-
+import "animate.css"
 // import { useNavigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
@@ -62,12 +62,12 @@ const Home = () => {
       <Navbar />
       {loading && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row className="gap-3 p-3">
-          <Col lg={10} className="ps-4">
+        <Row justify={"center"} className="gap-3 p-3">
+          <Col lg={10} md={10} sm={10} xs={24} className="">
             <MyInput
               names="search_category"
               controls={control}
-              placeholders="search"
+              placeholders="Search"
               errors="search is required"
               classAdd="h-[45px]"
               label=""
@@ -75,7 +75,7 @@ const Home = () => {
               messages={errors}
             />
           </Col>
-          <Col lg={10}>
+          <Col lg={10} md={10} sm={10} xs={24}>
             <SelectInput
               names="select_category"
               controls={control}
@@ -88,28 +88,34 @@ const Home = () => {
             />
           </Col>
           <Col>
-            <Button btnName="search" classAdd="mt-1" />
+            <Button btnName="Search" classAdd="mt-1" />
           </Col>
         </Row>
       </form>
-      <Row justify={"center"}>
-        <Col lg={24} className="flex flex-wrap">
-          {isLoginProductData.renderData.map((value, index) => (
-            <Card
-              onClick={() => {
-                navigate(`/single_product?productId=${value.productId}`);
-                // console.log("card onclick------->", value.productId);
-              }}
-              imgAddClass="object-cover"
-              key={value?.productId}
-              classAdd="w-[16rem] ms-5 mt-5"
-              productData={value}
-              images={value?.productImage}
-              names={value?.title}
-              prices={`Rs ${value?.price}`}
-              descriptions={`${value?.description?.slice(0, 50)}...`}
-            />
-          ))}
+      <Row>
+        <Col lg={24} className="">
+          <Row className="w-[90%] m-auto">
+            {isLoginProductData.renderData.map((value, index) => (
+              <Col lg={6} md={8} sm={12} xs={24} className="p-2 ">
+                <Card
+                  onClick={() => {
+                    navigate(`/single_product?productId=${value.productId}`);
+                    // console.log("card onclick------->", value.productId);
+                  }}
+                  imgAddClass="object-cover hover:scale-[1.1] duration-500"
+                  key={value?.productId}
+                  classAdd={`w-full ${
+                    !loading && "animate__animated animate__fadeIn"
+                  } `}
+                  productData={value}
+                  images={value?.productImage}
+                  names={value?.title}
+                  prices={`Rs ${value?.price}`}
+                  descriptions={`${value?.description?.slice(0, 25)}`}
+                />{" "}
+              </Col>
+            ))}
+          </Row>
         </Col>
       </Row>
     </>

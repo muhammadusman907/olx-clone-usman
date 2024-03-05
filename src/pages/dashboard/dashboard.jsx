@@ -40,7 +40,7 @@ const Dashboard = () => {
   const [cardData, setCardData] = useState({});
   const [ImageUrl, setImageUrl] = useState();
   const [loader, setLoader] = useState(false);
-  
+
   console.log("dashboard", userData);
   const navigate = useNavigate();
   const {
@@ -132,11 +132,6 @@ const Dashboard = () => {
 
     setLoader(false);
 
-    // console.log(data.image.file.originFileObj);
-    // const urls = URL.createObjectURL(data.image.file.originFileObj);
-    // let copyData = data;
-    // copyData.photoUrl = urls;
-    // setCardData(copyData);
     reset();
   };
   return (
@@ -145,8 +140,8 @@ const Dashboard = () => {
 
       <Navbar />
       {loader && <Loader />}
-      <Row className="mt-3 w-full gap-5 justify-around md:flex-col-reverse md:items-center">
-        <Col className="flex " lg={13} md={18} sm={20} xs={22}>
+      <Row className="mt-3 w-full gap-5 justify-around md:flex-col-reverse md:items-center my-shadow">
+        <Col className="flex " lg={17} md={18} sm={20} xs={22}>
           <form
             className="flex flex-col w-full bg-secondary p-5 rounded-md"
             onSubmit={handleSubmit(onSubmit)}
@@ -210,7 +205,7 @@ const Dashboard = () => {
           //    ============================================= 
            =================== USER INFORMATION =====================
                 ============================================== // */}
-        <Col lg={9} md={18} sm={20} xs={22}>
+        <Col lg={6} md={18} sm={20} xs={22}>
           <div className="w-full">
             <div className="bg-secondary h-[150px] w-[100%] me-2 p-3">
               <div className="flex items-center h-[70px]">
@@ -227,7 +222,7 @@ const Dashboard = () => {
                 <Button
                   btnName="Show my prorduct"
                   classAdd="w-[80%] mt-4"
-                  onClick={() =>navigate("/user-product")}
+                  onClick={() => navigate("/user-product")}
                 />
               </div>
             </div>

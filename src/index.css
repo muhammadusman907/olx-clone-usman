@@ -9,6 +9,7 @@
 }
 body{
   user-select: none;
+  background-color:#eeeeeeee ;
 }
 .upload-btn {
   background-color: #fff !important ;

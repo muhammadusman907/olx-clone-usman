@@ -27,7 +27,7 @@ const Navbar = () => {
       link: !isLogin && "/login",
       pageName: "Dashboard",
       pageLink: "/dashboard",
-      iconName: <IoHomeSharp />,
+      iconName: <MdDashboard />,
       btnIcon: !isLogin && <SiGnuprivacyguard />,
     },
     "/login": {
@@ -40,7 +40,7 @@ const Navbar = () => {
       link: `${pathname}/profile`,
       pageName: "Home",
       pageLink: "/",
-      iconName: <MdDashboard />,
+      iconName: <IoHomeSharp />,
       btnIcon: <CgProfile />,
     },
     "/signup": {
@@ -75,7 +75,8 @@ const Navbar = () => {
       pageName: "Home",
       pageLink: "/",
       iconName: <MdDashboard />,
-      btnIcon: <CgProfile />}
+      btnIcon: <CgProfile />,
+    },
   };
 
   return (
@@ -84,7 +85,7 @@ const Navbar = () => {
         <ul className="flex justify-between items-center h-[60px] ps-4 pe-4">
           <li>
             <Link to="/">
-              <GiTigerHead className="text-primary text-3xl" />
+              <GiTigerHead className="text-primary text-3xl hover:text-hover hover:duration-400" />
             </Link>
           </li>
           <li className="flex items-center">

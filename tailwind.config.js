@@ -14,13 +14,16 @@ export default {
     // => @media (min-width: 1024px) { ... }
     extend: {},
     colors: {
-      primary: "#388087",
-      secondary: "#F6F6F2",
+      primary: "#444444",
+      secondary: "#dddddd",
+      white: "#ffffff",
       default: "#f6ffed",
-      
+      card_bg: "#eeeeee",
+      hover: "#999999",
     },
   },
   plugins: [],
 };
 
 // 4a5759 dedbd2
+//  primary: "#388087",

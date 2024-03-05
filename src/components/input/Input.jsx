@@ -34,7 +34,7 @@ const MyInput = ({
             type={types}
             {...field}
             placeholder={placeholders}
-            className={`w-[100%] ${classAdd} border-2 `}
+            className={`w-[100%] ${classAdd} border-2 bg-white`}
             status={messages && messages[names]?.message && "error"}
           />
         )}
@@ -66,7 +66,7 @@ const SelectInput = ({
           <Select
             {...field}
             placeholder={placeholders}
-            className={`w-[100%] rounded-lg ${classAdd}`}
+            className={`w-[100%] rounded-lg ${classAdd} bg-white`}
             options={[
               {
                 label: "Car",
@@ -135,26 +135,26 @@ const UploadInput = ({
           rules={{ required: errors }}
           {...registers(names)}
           render={({ field }) => ( */}
-            <Upload
-              // {...field}
-              beforeUpload={() => true}
-              onChange={(e) =>
-                e.file.status !== "removed" &&
-                uploadImageStorage(e.file.originFileObj)
-              }
-              placeholder={placeholders}
-              className={`${classAdd} text-primary border-primary`}
-              listType="picture"
-              maxCount={1}
-            >
-              <Button
-                className="bg-default rounded-md h-[45px]"
-                icon={<UploadOutlined />}
-              >
-                Upload
-              </Button>
-            </Upload>
-          {/* )}
+        <Upload
+          // {...field}
+          beforeUpload={() => true}
+          onChange={(e) =>
+            e.file.status !== "removed" &&
+            uploadImageStorage(e.file.originFileObj)
+          }
+          placeholder={placeholders}
+          className={`${classAdd} text-primary border-primary`}
+          listType="picture"
+          maxCount={1}
+        >
+          <Button
+            className="bg-default rounded-md h-[45px]"
+            icon={<UploadOutlined />}
+          >
+            Upload
+          </Button>
+        </Upload>
+        {/* )}
         /> */}
       </div>
     </>

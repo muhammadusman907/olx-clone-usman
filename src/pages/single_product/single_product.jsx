@@ -1,13 +1,15 @@
 import React from "react";
 import { useContext } from "react";
 import Auth from "../../context/UserData.jsx";
+import "animate.css";
+
 import {
   RouterProvider,
   useLocation,
   useSearchParams,
   useNavigate,
 } from "react-router-dom";
-import { Row, Col } from "antd";
+import { Row, Col, Rate } from "antd";
 import Card from "../../components/card/Card.jsx";
 import Button from "../../components/button/Button.jsx";
 import Navbar from "../../components/navbar/Navbar.jsx";
@@ -26,30 +28,55 @@ const Single_product = () => {
   return (
     <>
       <Navbar />
-      <Row className="mt-4 gap-4">
-        <Col lg={14} className="h-[80vh] ms-12 select-none">
-          <div className="">
-            <Card
-              classAdd="w-[100%] h-[250px] my-shadow"
-              images={singleProduct[0]?.productImage}
-              imgAddClass="object-contain  h-[250px]"
-              //
-              // prices={singleProduct[0]?.price}
-              // descriptions={singleProduct[0]?.description}
-            />
-            {/* <Card names={singleProduct[0]?.productName}/> */}
-          </div>
-          <div className="h-auto mt-2 p-2 my-shadow font-bold text-[1.6rem] w-full rounded-sm">
-            <p>{`RS: ${singleProduct[0]?.price}`}</p>
-            <p className="text-[1.2rem] ">{`${singleProduct[0]?.title}`}</p>
-          </div>
-          <div className="rounded-sm h-auto mt-2 p-2 my-shadow text-[0.9rem] w-full">
-            <h2 className="text-[1.5rem] font-bold">Description:</h2>
-            {`${singleProduct[0]?.description}`}
-          </div>
+      <Row className="mt-4 gap-4 bg-white w-[90%] m-auto p-2 my-shadow rounded-[4px]">
+        <Col
+          md={21}
+          lg={14}
+          xs={19}
+          sm={20}
+          className="flex select-none animate__animated animate__fadeIn m-auto"
+        >
+          <Row className="w-full gap-3 ">
+            <Col
+              lg={13}
+              md={11}
+              sm={21}
+              className="h-[380px] overflow-hidden my-shadow rounded-[4px] w-full"
+            >
+              <img
+                src={singleProduct[0]?.productImage}
+                className="object-contain h-[380px] m-auto hover:scale-105 duration-500"
+                alt=""
+              />
+            </Col>
+            <Col lg={9} md={11} sm={21} className="h-fit">
+              <div className="h-auto w-full ">
+                <p className="text-[1.4rem] font-bold ">{`${singleProduct[0]?.title}`}</p>
+                <p className="text-[1.5rem] text-primary font-semibold leading-[30px]">{`Rs. ${singleProduct[0]?.price}`}</p>
+              </div>
+              <div className=" leading-[30px]">
+                <Rate allowHalf defaultValue={5} />
+              </div>
+              <hr />
+
+              <div className="flex rounded-sm h-auto text-[0.9rem] w-full gap-1">
+                <h2 className="text-[1rem] font-semibold h-fit">
+                  Description:
+                </h2>
+                <div className="text-[gray]">{`${singleProduct[0]?.description}`}</div>
+              </div>
+              <hr />
+            </Col>
+          </Row>
         </Col>
-        <Col className=" rounded-sm" lg={8}>
-          <div className="my-shadow p-4 ">
+        <Col
+          className="rounded-[4px] my-shadow ms-auto me-auto"
+          xs={19}
+          sm={20}
+          md={21}
+          lg={8}
+        >
+          <div className="p-4 ">
             <div className=" h-[70px] flex items-center">
               <div className=" h-[60px] w-[60px] rounded-full">
                 <FaUser className="w-full h-full rounded-full p-1 my-shadow" />
@@ -72,9 +99,9 @@ const Single_product = () => {
               />
             </div>
           </div>
-          <div className="h-[130px] my-shadow mt-4">
+          {/* <div className="h-[130px] my-shadow mt-4">
             <h1>Location</h1>
-          </div>
+          </div> */}
         </Col>
       </Row>
     </>
