@@ -5,10 +5,11 @@ import { MyInput, SelectInput } from "../../components/input/Input.jsx";
 import { Row, Col } from "antd";
 import { useForm } from "react-hook-form";
 import Card from "../../components/card/Card.jsx";
-import { useContext } from "react";
+import { useContext , useState} from "react";
 import Auth from "../../context/UserData.jsx";
 import Loader from "../../components/loader/Loader.jsx";
-import "animate.css"
+import { spinnerFalse } from "../../helper/helper.js";
+import "animate.css";
 // import { useNavigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
@@ -24,12 +25,14 @@ import {
 } from "../../config/firebase.js";
 const Home = () => {
   const { isLogin, userData, productList, loading } = useContext(Auth);
+
   const productotherUser = productList.filter(
     (value) => value.productUserData.userId !== userData.userId
   );
   const isLoginProductData = {
     renderData: userData ? productotherUser : productList,
   };
+  const [spinner, setSpinner] = useState(true);
   // console.log("other user data ----> ", productotherUser);
   const navigate = useNavigate();
   const {
@@ -96,7 +99,7 @@ const Home = () => {
         <Col lg={24} className="">
           <Row className="w-[90%] m-auto">
             {isLoginProductData.renderData.map((value, index) => (
-              <Col lg={6} md={8} sm={12} xs={24} className="p-2 ">
+              <Col lg={6} md={8} sm={12} xs={24} className="p-2 " key={value.productId}>
                 <Card
                   onClick={() => {
                     navigate(`/single_product?productId=${value.productId}`);
@@ -108,11 +111,13 @@ const Home = () => {
                     !loading && "animate__animated animate__fadeIn"
                   } `}
                   productData={value}
+                  onLoads={() => spinnerFalse(setSpinner)}
+                  imageLoading={spinner}
                   images={value?.productImage}
                   names={value?.title}
                   prices={`Rs ${value?.price}`}
                   descriptions={`${value?.description?.slice(0, 25)}`}
-                />{" "}
+                />
               </Col>
             ))}
           </Row>

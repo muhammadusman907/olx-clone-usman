@@ -21,7 +21,7 @@ import {
   getStorage,
   ref,
   uploadBytesResumable,
-  getDownloadURL
+  getDownloadURL,
 } from "../../config/firebase";
 import { useForm } from "react-hook-form";
 import {
@@ -48,7 +48,7 @@ const UserProduct = () => {
     defaultValues: {},
   });
   // update product fuction
-console.log(updateProductId);
+  console.log(updateProductId);
   const uploadImage = (file) => {
     setLoader(true);
     return new Promise((resolve, reject) => {
@@ -111,7 +111,7 @@ console.log(updateProductId);
     console.log(ImageUrl);
     console.log(data);
     // const docRef = await addDoc(collection(db, "products",), {});
-    const productRef = doc(db, "products",updateProductId);
+    const productRef = doc(db, "products", updateProductId);
     await updateDoc(productRef, {
       ...data,
       productImage: ImageUrl,
@@ -119,13 +119,13 @@ console.log(updateProductId);
     });
     setLoader(false);
     reset();
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "update SuccessFully",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "update SuccessFully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     setModal2Open(false);
   };
 
@@ -237,7 +237,7 @@ console.log(updateProductId);
           {currentUserProduct.map((value) => (
             // console.log(value);
             <div
-              className="my-shadow h-22 m-auto  w-[80%] mt-2 h-[120px] flex items-center p-2 justify-between"
+              className="my-shadow h-22 m-auto  w-[80%] mt-2 h-[120px] flex items-center p-2 justify-between bg-white"
               key={value.userId}
             >
               <div className="flex">
@@ -245,24 +245,32 @@ console.log(updateProductId);
                   <img
                     src={value.productImage}
                     alt=""
-                    className="h-[100px] w-[100px] object-cover"
+                    className="h-[100px] w-[100px] object-cover hover:scale-105 duration-500"
                   />
                 </div>
                 <div className="ms-4 flex flex-col justify-end">
-                  <p className="font-bold text-[2rem]">{value.title}</p>
-                  <p className="font-bold">Rs: {value.price}</p>
-                  <p className="font-bold">Description: {value.description}</p>
+                  <p className="font-semibold text-[2rem]">{value.title}</p>
+
+                  <p className="font-semibold text-[gray] text-[1.2rem]">
+                    Description: {value.description}
+                  </p>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <Button btnIcons={<AiFillDelete />} classAdd="bg-[#df1717]" />
-                <Button
-                  btnIcons={<MdEditSquare />}
-                  onClick={() => {
-                    setModal2Open(true);
-                    setUpdateProductId(value.userId);
-                  }}
-                />
+              <div className="flex  flex-col justify-end h-[100px]">
+                <div className="flex gap-2 ms-auto">
+                  <Button
+                    btnIcons={<AiFillDelete />}
+                    classAdd="bg-[red] hover:bg-[#f06060]"
+                  />
+                  <Button
+                    btnIcons={<MdEditSquare />}
+                    onClick={() => {
+                      setModal2Open(true);
+                      setUpdateProductId(value.userId);
+                    }}
+                  />
+                </div>
+                <p className="font-semibold text-[1.2rem]">Rs: {value.price}</p>
               </div>
             </div>
           ))}

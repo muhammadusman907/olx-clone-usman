@@ -34,7 +34,7 @@ const MyInput = ({
             type={types}
             {...field}
             placeholder={placeholders}
-            className={`w-[100%] ${classAdd} border-2 bg-white`}
+            className={`w-[100%] ${classAdd} border-2 `}
             status={messages && messages[names]?.message && "error"}
           />
         )}

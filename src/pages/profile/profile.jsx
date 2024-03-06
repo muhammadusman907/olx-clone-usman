@@ -17,7 +17,7 @@ import {
   doc,
   updateDoc,
   auth,
-  db
+  db,
 } from "../../config/firebase.js";
 import Button from "../../components/button/Button.jsx";
 const Profile = () => {
@@ -53,13 +53,13 @@ const Profile = () => {
         }
       },
       (error) => {
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: error,
-      showConfirmButton: false,
-      timer: 1500,
-    });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -77,22 +77,22 @@ const Profile = () => {
     await updateDoc(userRef, {
       photoUrl: profileImage,
     });
-   Swal.fire({
-     position: "center",
-     icon: "success",
-     title: "profile update SuccessFully",
-     showConfirmButton: false,
-     timer: 1500,
-   });
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "profile update SuccessFully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
-  console.log(userData.photoUrl)
+  console.log(userData.photoUrl);
   return (
     <>
       <Navbar />
       {loader && <Loader />}
       <Row justify={"center"} className="mt-6">
         <Col
-          className=" bg-secondary p-8 rounded-md"
+          className=" bg-white p-8 rounded-md"
           xs={22}
           sm={18}
           md={16}
@@ -101,7 +101,13 @@ const Profile = () => {
           <Row justify={"center"}>
             <Col className=" relative">
               <img
-                src={userData?.photoUrl ? userData?.photoUrl : profileImage ? profileImage : CAR}
+                src={
+                  userData?.photoUrl
+                    ? userData?.photoUrl
+                    : profileImage
+                    ? profileImage
+                    : CAR
+                }
                 className="h-[160px] shadow-md w-[160px] rounded-full object-cover"
                 alt=""
               />

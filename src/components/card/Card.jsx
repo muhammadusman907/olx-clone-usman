@@ -1,5 +1,6 @@
 import CardImage from "../../assets/images/car.jpg";
 import { Rate } from "antd";
+import Loader from "../loader/Loader";
 const Card = ({
   classAdd,
   productData,
@@ -8,6 +9,8 @@ const Card = ({
   images,
   descriptions,
   imgAddClass,
+  onLoads,
+  imageLoading,
   ...prop
 }) => {
   return (
@@ -15,12 +18,14 @@ const Card = ({
       <div
         {...prop}
         className={`bg-white rounded h-[350px] overflow-hidden my-shadow ${classAdd} cursor-pointer`}
-      >
-        <div className="my-shadow overflow-hidden">
+      > 
+        <div className="my-shadow overflow-hidden relative">
+        {imageLoading && <Loader classAdd="items-start justify-start top-1 absolute"/>}
           <img
             className={`w-full h-[200px] ${imgAddClass} `}
             src={images}
             alt="Sunset in the mountains"
+            onLoad={onLoads}
           />
         </div>
         <div className="px-6 py-4">

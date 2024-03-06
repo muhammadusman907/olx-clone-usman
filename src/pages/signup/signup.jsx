@@ -73,7 +73,7 @@ const Signup = () => {
           sm={16}
           md={12}
           lg={9}
-          className="h-[420px] bg-secondary rounded-md"
+          className="h-[480px] bg-white rounded-md hover:scale-[1.03] duration-500"
         >
           <h1 className="text-center font-bold text-2xl mt-2 text-primary font-sans">
             Register
@@ -100,7 +100,7 @@ const Signup = () => {
             >
               <Input
                 placeholder="your name"
-                className="border-1 border-primary"
+                className="border-1 border-primary h-[50px]"
               />
             </Form.Item>
             <label htmlFor="email">Your Email:</label>
@@ -116,7 +116,7 @@ const Signup = () => {
             >
               <Input
                 placeholder="email@gmail.com"
-                className="border-1 border-primary"
+                className="border-1 border-primary h-[50px]"
               />
             </Form.Item>
             <label htmlFor="username">Password:</label>
@@ -132,7 +132,7 @@ const Signup = () => {
             >
               <Input.Password
                 placeholder="•••••••"
-                className="border-1 border-primary"
+                className="border-1 border-primary h-[50px]"
               />
             </Form.Item>
             <Form.Item>

@@ -132,14 +132,13 @@ const Chat = () => {
       "chatUser",
       localStorage.getItem("getChatId")
     );
-  // *****************************************************************************
-  //  ya user ko ja kar update karway ga or un user ko rakha ga jin sa cht hoi hai
+    // *****************************************************************************
+    //  ya user ko ja kar update karway ga or un user ko rakha ga jin sa cht hoi hai
     await updateDoc(senderUserRef, {
       timestamp: serverTimestamp(),
       ...senderUser,
       users: arrayUnion({ ...userData }),
     });
-
 
     await updateDoc(currentUserRef, {
       ...userData,
@@ -197,7 +196,7 @@ const Chat = () => {
                   <div
                     key={value.userId}
                     onClick={() => selectUser(value.userId)}
-                    className=" my-shadow mt-2 p-2 flex items-center hover:bg-[#faf8f8] cursor-pointer"
+                    className="my-shadow rounded-[4px] bg-white mt-2 p-2 flex items-center hover:bg-default duration-300 cursor-pointer hover:scale-[1.01]"
                   >
                     <div className="h-[50px] w-[50px] my-shadow rounded-full">
                       <FaUser className="w-full h-full rounded-full p-1" />

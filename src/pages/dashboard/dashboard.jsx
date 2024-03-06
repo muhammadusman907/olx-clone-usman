@@ -140,12 +140,15 @@ const Dashboard = () => {
 
       <Navbar />
       {loader && <Loader />}
-      <Row className="mt-3 w-full gap-5 justify-around md:flex-col-reverse md:items-center my-shadow">
-        <Col className="flex " lg={17} md={18} sm={20} xs={22}>
+      <Row className="mt-3 w-full gap-2 justify-around md:flex-col-reverse md:items-center">
+        <Col className="flex w-full" lg={13} md={13} sm={22} xs={22}>
           <form
-            className="flex flex-col w-full bg-secondary p-5 rounded-md"
+            className="flex flex-col w-full bg-white p-5 rounded-[4px]"
             onSubmit={handleSubmit(onSubmit)}
           >
+            <h1 className="text-[1.2rem] font-bold text-center">
+              Post Your Product
+            </h1>
             <MyInput
               names="title"
               controls={control}
@@ -205,9 +208,9 @@ const Dashboard = () => {
           //    ============================================= 
            =================== USER INFORMATION =====================
                 ============================================== // */}
-        <Col lg={6} md={18} sm={20} xs={22}>
+        <Col lg={6} md={7} sm={22} xs={22} className="w-full">
           <div className="w-full">
-            <div className="bg-secondary h-[150px] w-[100%] me-2 p-3">
+            <div className="bg-white h-[150px] w-[100%] me-2 p-3 rounded-[4px]">
               <div className="flex items-center h-[70px]">
                 <div className="h-[60px] w-[60px] rounded-full bg-primary ">
                   <img

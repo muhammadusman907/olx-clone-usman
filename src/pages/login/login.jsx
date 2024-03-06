@@ -63,7 +63,11 @@ const Login = () => {
       <Navbar />
       {isLogin && <Loader />}
       <Row className="w-full flex justify-center mt-5">
-        <Col xs={24} lg={9} className="h-[380px] bg-secondary rounded-md">
+        <Col
+          xs={24}
+          lg={9}
+          className="h-[480px] flex flex-col justify-center bg-white rounded-md hover:scale-[1.02] duration-500"
+        >
           <h1 className="text-center font-bold text-2xl mt-2 text-primary font-sans">
             Login
           </h1>
@@ -90,7 +94,7 @@ const Login = () => {
             >
               <Input
                 placeholder="email@gmail.com"
-                className="border-1 border-primary"
+                className="border-1 border-primary h-[50px]"
               />
             </Form.Item>
             <label htmlFor="username">Password: </label>
@@ -99,14 +103,14 @@ const Login = () => {
               rules={[
                 {
                   required: true,
-                  message: "At Least 7 Character",
+                  message: "At Least 6 Character",
                   pattern: /(?=.{6,40}$)/,
                 },
               ]}
             >
               <Input.Password
                 placeholder="•••••••"
-                className="border-1 border-primary"
+                className="border-1 border-primary h-[50px]"
               />
             </Form.Item>
             <Form.Item>
@@ -114,7 +118,7 @@ const Login = () => {
                 type="primary"
                 htmlType="submit"
                 btnName="submit"
-                classAdd="w-[100%] mt-6"
+                classAdd="w-[100%] mt-6 h-[100px]"
               />
             </Form.Item>
           </Form>
