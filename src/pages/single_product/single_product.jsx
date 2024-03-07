@@ -49,23 +49,23 @@ const Single_product = () => {
               className="h-[380px] overflow-hidden rounded-[4px] px-3 flex justify-center"
             >
               {spinner && <Loader/>}
-              {/* <Image
+              <Image
                 className="object-contain h-[380px] hover:scale-105 duration-500 object-top"
                 src={singleProduct[0]?.productImage}
                 preview={{
                  src: singleProduct[0]?.productImage
-                    
+                  
                 }}
+                onLoad={ () => spinnerFalse(setSpinner)}
                 loading="lazy"
-              /> */}
-
-              <img
+              />
+              {/* <img
                 src={singleProduct[0]?.productImage}
                 className="object-contain h-[380px] hover:scale-105 duration-500 object-top"
                 alt=""
                 loading="lazy"
                 onLoad={ () => spinnerFalse(setSpinner)}
-              />
+              /> */}
             </Col>
               <Col
                 lg={12}

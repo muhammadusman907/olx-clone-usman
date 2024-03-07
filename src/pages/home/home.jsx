@@ -5,12 +5,12 @@ import { MyInput, SelectInput } from "../../components/input/Input.jsx";
 import { Row, Col } from "antd";
 import { useForm } from "react-hook-form";
 import Card from "../../components/card/Card.jsx";
-import { useContext , useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import Auth from "../../context/UserData.jsx";
 import Loader from "../../components/loader/Loader.jsx";
 import { spinnerFalse } from "../../helper/helper.js";
 import "animate.css";
-// import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   collection,
@@ -25,15 +25,40 @@ import {
 } from "../../config/firebase.js";
 const Home = () => {
   const { isLogin, userData, productList, loading } = useContext(Auth);
-
-  const productotherUser = productList.filter(
+  const [allProducts, setAllProducts] = useState([]);
+  // =====================
+  //  fake store api use
+  useEffect(() => {
+    axios.get("https://fakestoreapi.com/products").then((res) => {
+      // console.log(res.data);
+      let fakeProductArr = [];
+      res.data.forEach((value) => {
+        fakeProductArr.push({
+          userId: value.id,
+          productImage: value.image,
+          ...value,
+          productId:value.id ,
+          productUserData: {
+            userId: value.id,
+            username: "fake user",
+          },
+        });
+        setAllProducts([...fakeProductArr]);
+      });
+      // setAllProducts([...res.data]);
+    });
+  }, []);
+  const margeArr = [...productList, ...allProducts];
+  const productotherUser = margeArr.filter(
     (value) => value.productUserData.userId !== userData.userId
   );
   const isLoginProductData = {
     renderData: userData ? productotherUser : productList,
   };
+
   const [spinner, setSpinner] = useState(true);
-  // console.log("other user data ----> ", productotherUser);
+
+  console.log("other user data ----> ", productotherUser);
   const navigate = useNavigate();
   const {
     control,
@@ -51,11 +76,10 @@ const Home = () => {
       collection(db, "products"),
       where("category", "==", data.search_category)
     );
-
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
     });
   };
   // console.log("home page", productList);
@@ -99,13 +123,20 @@ const Home = () => {
         <Col lg={24} className="">
           <Row className="w-[90%] m-auto">
             {isLoginProductData.renderData.map((value, index) => (
-              <Col lg={6} md={8} sm={12} xs={24} className="p-2 " key={value.productId}>
+              <Col
+                lg={6}
+                md={8}
+                sm={12}
+                xs={24}
+                className="p-2 "
+                key={value.productId}
+              >
                 <Card
                   onClick={() => {
                     navigate(`/single_product?productId=${value.productId}`);
                     // console.log("card onclick------->", value.productId);
                   }}
-                  imgAddClass="object-cover hover:scale-[1.1] duration-500"
+                  imgAddClass="object-contain hover:scale-[1.1] duration-500"
                   key={value?.productId}
                   classAdd={`w-full ${
                     !loading && "animate__animated animate__fadeIn"
@@ -114,7 +145,7 @@ const Home = () => {
                   onLoads={() => spinnerFalse(setSpinner)}
                   imageLoading={spinner}
                   images={value?.productImage}
-                  names={value?.title}
+                  names={value?.title.slice(0, 25)}
                   prices={`Rs ${value?.price}`}
                   descriptions={`${value?.description?.slice(0, 25)}`}
                 />
