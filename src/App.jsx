@@ -4,6 +4,7 @@ import Home from "./pages/home/home.jsx";
 import AppRouter from "./routes/AppRouter.jsx";
 import React, { useCallback, useEffect, useState } from "react";
 import Auth from "./context/UserData.jsx";
+import axios from "axios";
 import {
   auth,
   onAuthStateChanged,
@@ -23,6 +24,7 @@ const App = () => {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
   // console.log(Object.keys(userData).length);
   console.log({ isLogin });
   const userIds = localStorage.getItem("userId");
@@ -88,11 +90,34 @@ const App = () => {
   };
   useEffect(() => {
     getProduct();
+    // =====================
+    //  fake store api use
+    axios.get("https://fakestoreapi.com/products").then((res) => {
+      // console.log(res.data);
+      let fakeProductArr = [];
+      res.data.forEach((value) => {
+        fakeProductArr.push({
+          userId: value.id,
+          productImage: value.image,
+          ...value,
+          productId: value.id,
+          productUserData: {
+            userId: value.id,
+            username: "fake user",
+            email: "fakeUser@gmail.com",
+          },
+        });
+        setAllProducts([...fakeProductArr]);
+      });
+      // setAllProducts([...res.data]);
+    });
   }, []);
 
   return (
     <>
-      <Auth.Provider value={{ isLogin, userData, productList, loading }}>
+      <Auth.Provider
+        value={{ isLogin, userData, productList, loading, allProducts }}
+      >
         <Theme>
           <AppRouter />
         </Theme>
@@ -101,6 +126,3 @@ const App = () => {
   );
 };
 export default App;
-
-
-

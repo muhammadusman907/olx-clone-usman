@@ -5,6 +5,7 @@ import { GiTigerHead } from "react-icons/gi";
 import { IoHomeSharp } from "react-icons/io5";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
+import { HiOutlineLogout } from "react-icons/hi";
 import { useContext } from "react";
 import Auth from "../../context/UserData.jsx";
 import { signOut } from "firebase/auth";
@@ -28,7 +29,7 @@ const Navbar = () => {
       pageName: "Dashboard",
       pageLink: "/dashboard",
       iconName: <MdDashboard />,
-      btnIcon: !isLogin && <SiGnuprivacyguard />,
+      btnIcon: !isLogin ? <SiGnuprivacyguard /> : <HiOutlineLogout />,
     },
     "/login": {
       btnName: "SignUp",
@@ -37,7 +38,7 @@ const Navbar = () => {
     },
     "/dashboard": {
       btnName: "Profile",
-      link: `${pathname}/profile`,
+      link: `/profile`,
       pageName: "Home",
       pageLink: "/",
       iconName: <IoHomeSharp />,
@@ -48,7 +49,7 @@ const Navbar = () => {
       link: "/login",
       btnIcon: <SiGnuprivacyguard />,
     },
-    "/dashboard/profile": {
+    "/profile": {
       pageName: "Dashboard",
       pageLink: "/dashboard",
       iconName: <MdDashboard />,
@@ -59,7 +60,7 @@ const Navbar = () => {
       pageName: "Dashboard",
       pageLink: "/dashboard",
       iconName: <IoHomeSharp />,
-      btnIcon: !isLogin && <SiGnuprivacyguard />,
+      btnIcon: !isLogin ? <SiGnuprivacyguard /> : <HiOutlineLogout />,
     },
     "/chat": {
       btnName: isLogin ? "Logout" : "Login",
@@ -67,13 +68,13 @@ const Navbar = () => {
       pageName: "Dashboard",
       pageLink: "/dashboard",
       iconName: <IoHomeSharp />,
-      btnIcon: !isLogin && <SiGnuprivacyguard />,
+      btnIcon: !isLogin ? <SiGnuprivacyguard /> : <HiOutlineLogout />,
     },
     "/user-product": {
       btnName: "Profile",
-      link: `${pathname}/profile`,
-      pageName: "Home",
-      pageLink: "/",
+      link: `/profile`,
+      pageName: "Dashboard",
+      pageLink: "/dashboard",
       iconName: <MdDashboard />,
       btnIcon: <CgProfile />,
     },

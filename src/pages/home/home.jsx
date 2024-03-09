@@ -2,7 +2,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Button from "../../components/button/Button.jsx";
 import { Link } from "react-router-dom";
 import { MyInput, SelectInput } from "../../components/input/Input.jsx";
-import { Row, Col } from "antd";
+import { Row, Col, Carousel } from "antd";
 import { useForm } from "react-hook-form";
 import Card from "../../components/card/Card.jsx";
 import { useContext, useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import Auth from "../../context/UserData.jsx";
 import Loader from "../../components/loader/Loader.jsx";
 import { spinnerFalse } from "../../helper/helper.js";
 import "animate.css";
+import CARIMAGE from "../../assets/images/slider.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -24,30 +25,10 @@ import {
   auth,
 } from "../../config/firebase.js";
 const Home = () => {
-  const { isLogin, userData, productList, loading } = useContext(Auth);
-  const [allProducts, setAllProducts] = useState([]);
-  // =====================
-  //  fake store api use
-  useEffect(() => {
-    axios.get("https://fakestoreapi.com/products").then((res) => {
-      // console.log(res.data);
-      let fakeProductArr = [];
-      res.data.forEach((value) => {
-        fakeProductArr.push({
-          userId: value.id,
-          productImage: value.image,
-          ...value,
-          productId:value.id ,
-          productUserData: {
-            userId: value.id,
-            username: "fake user",
-          },
-        });
-        setAllProducts([...fakeProductArr]);
-      });
-      // setAllProducts([...res.data]);
-    });
-  }, []);
+  // ********************
+  // get data context api
+  const { isLogin, userData, productList, loading, allProducts } =
+    useContext(Auth);
   const margeArr = [...productList, ...allProducts];
   const productotherUser = margeArr.filter(
     (value) => value.productUserData.userId !== userData.userId
@@ -55,7 +36,8 @@ const Home = () => {
   const isLoginProductData = {
     renderData: userData ? productotherUser : productList,
   };
-
+  // ***********************
+  // ------- image spinner
   const [spinner, setSpinner] = useState(true);
 
   console.log("other user data ----> ", productotherUser);
@@ -82,43 +64,65 @@ const Home = () => {
       // console.log(doc.id, " => ", doc.data());
     });
   };
+  // const contentStyle = {
+  //   height: "160px",
+  //   color: "#fff",
+  //   lineHeight: "160px",
+  //   textAlign: "center",
+  //   background: "#000",
+  // };
   // console.log("home page", productList);
   // console.log("home page loading", loading)
   return (
     <>
       <Navbar />
       {loading && <Loader />}
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row justify={"center"} className="gap-3 p-3">
-          <Col lg={10} md={10} sm={10} xs={24} className="">
+        <Row justify={"center"} className="p-3">
+          <Col lg={10} md={10} sm={10} xs={10} className="">
             <MyInput
               names="search_category"
               controls={control}
               placeholders="Search"
               errors="search is required"
-              classAdd="h-[45px]"
+              classAdd="h-[37.2px] border border-r-none "
               label=""
               types="text"
               messages={errors}
             />
           </Col>
-          <Col lg={10} md={10} sm={10} xs={24}>
+          <Col lg={5} md={5} sm={5} xs={8}>
             <SelectInput
               names="select_category"
               controls={control}
               placeholders="Select"
               errors="select is required"
-              classAdd="h-[45px]"
+              classAdd="h-[37.2px]"
+              className=" outline-none"
               label=""
               messages={errors}
               types="text"
             />
           </Col>
           <Col>
-            <Button btnName="Search" classAdd="mt-1" />
-          </Col>
+            <Button btnName="Search" classAdd=" rounded-l-none  " />
+          </Col>{" "}
         </Row>
       </form>
+      <Row className="w-full justify-center">
+        <Col lg={22} className="w-[] px-4">
+          <Carousel autoplay>
+            <div className=" h-fit">
+              <img src={CARIMAGE} alt="" className=" " />
+            </div>
+            <div className=" h-fit">
+              <img src={CARIMAGE} alt="" className="" />
+            </div>
+          </Carousel>
+        </Col>
+      </Row>
+
       <Row>
         <Col lg={24} className="">
           <Row className="w-[90%] m-auto">

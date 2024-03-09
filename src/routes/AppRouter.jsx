@@ -13,7 +13,7 @@ const AppRouter = () => {
   const { isLogin } = useContext(Auth);
   const { pathname } = useLocation();
 
-  // console.log({ pathname });
+  console.log({ pathname });
 
   return (
     <Routes>
@@ -30,10 +30,13 @@ const AppRouter = () => {
         path="/dashboard"
         element={isLogin ? <Dashboard /> : <Navigate to="/login" />}
       ></Route>
-      <Route
-        path={`/dashboard/profile`}
-        element={isLogin && <Profile />}
-      ></Route>
+      <Route path="/profile" element={isLogin && <Profile />}></Route>
+      {/* {["/user-product/profile", "/dashboard/profile"].map(
+        (path) => (
+          <Route path={path} element={<Profile />} />
+        )
+      )} */}
+
       <Route path="/single_product" element={<Single_product />}></Route>
       <Route
         path="/chat"

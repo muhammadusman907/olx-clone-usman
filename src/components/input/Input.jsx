@@ -66,7 +66,7 @@ const SelectInput = ({
           <Select
             {...field}
             placeholder={placeholders}
-            className={`w-[100%] rounded-lg ${classAdd} bg-white`}
+            className={`w-[100%] rounded-lg ${classAdd} bg-white `}
             options={[
               {
                 label: "Car",

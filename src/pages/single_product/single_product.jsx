@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import Auth from "../../context/UserData.jsx";
+
 import "animate.css";
 import {
   RouterProvider,
@@ -18,13 +19,15 @@ import { spinnerFalse } from "../../helper/helper.js";
 const Single_product = () => {
   const { url, pathname, search } = useLocation();
   const navigate = useNavigate();
-  const { productList, loading } = useContext(Auth);
+  const { productList, loading, allProducts } = useContext(Auth);
   const [searchParams] = useSearchParams();
   const [spinner, setSpinner] = useState(true);
   const productId = searchParams.get("productId");
-  const singleProduct = productList.filter(
-    (value) => value.productId === productId
-  );
+  const margeArr = [...productList, ...allProducts];
+  console.log(margeArr);
+  const singleProduct = margeArr.filter((value) => {
+    return value.productId == productId;
+  });
   // const spinnerFalse = () => {
   //   setSpinner(false);
   // };
@@ -48,15 +51,14 @@ const Single_product = () => {
               sm={24}
               className="h-[380px] overflow-hidden rounded-[4px] px-3 flex justify-center"
             >
-              {spinner && <Loader/>}
+              {spinner && <Loader />}
               <Image
                 className="object-contain h-[380px] hover:scale-105 duration-500 object-top"
                 src={singleProduct[0]?.productImage}
                 preview={{
-                 src: singleProduct[0]?.productImage
-                  
+                  src: singleProduct[0]?.productImage,
                 }}
-                onLoad={ () => spinnerFalse(setSpinner)}
+                onLoad={() => spinnerFalse(setSpinner)}
                 loading="lazy"
               />
               {/* <img
@@ -67,34 +69,35 @@ const Single_product = () => {
                 onLoad={ () => spinnerFalse(setSpinner)}
               /> */}
             </Col>
-              <Col
-                lg={12}
-                md={12}
-                sm={24}
-                className="h-fit px-3 animate__animated animate__fadeIn"
-              >
-           {singleProduct[0]?.title == undefined ? (
-              <Skeleton className=" relative top-0 w-2/3" />
-            ) : <> <div className="h-auto w-full ">
-                  <p className="text-[1.4rem] font-bold ">{`${singleProduct[0]?.title}`}</p>
-                  <p className="text-[1.5rem] text-primary font-semibold leading-[30px]">{`Rs. ${singleProduct[0]?.price}`}</p>
-                </div>
-                <div className=" leading-[30px]">
-                  <Rate allowHalf defaultValue={5} />
-                </div>
-                <hr />
-
-                <div className="flex rounded-sm h-auto text-[0.9rem] w-full gap-1">
-                  <h2 className="text-[1rem] font-semibold h-fit">
-                    Description:
-                  </h2>
-                  <div className="text-[gray]">{`${singleProduct[0]?.description}`}</div>
-                </div>
-                <hr />
-                </>}
-                
-              </Col>
-            
+            <Col
+              lg={12}
+              md={12}
+              sm={24}
+              className="h-fit px-3 animate__animated animate__fadeIn"
+            >
+              {singleProduct[0]?.title == undefined ? (
+                <Skeleton className=" relative top-0 w-2/3" />
+              ) : (
+                <>
+                  {" "}
+                  <div className="h-auto w-full ">
+                    <p className="text-[1.4rem] font-bold ">{`${singleProduct[0]?.title}`}</p>
+                    <p className="text-[1.5rem] text-primary font-semibold leading-[30px]">{`Rs. ${singleProduct[0]?.price}`}</p>
+                  </div>
+                  <div className=" leading-[30px]">
+                    <Rate allowHalf defaultValue={5} />
+                  </div>
+                  {/* <hr className=" " /> */}
+                  <div className="flex rounded-sm h-auto text-[0.9rem] w-full gap-1 py-2 border-[gray] border-b-2 border-t-2">
+                    <div className="text-[1rem] font-semibold h-fit">
+                      Description:
+                      <div className="text-[gray] font-normal">{`${singleProduct[0]?.description}`}</div>
+                    </div>
+                  </div>
+                  {/* <hr className="border-[#c1c1c1]" /> */}
+                </>
+              )}
+            </Col>
           </Row>
         </Col>
         <Col
