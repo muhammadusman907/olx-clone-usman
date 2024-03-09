@@ -6,6 +6,7 @@ import { IoHomeSharp } from "react-icons/io5";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineLogout } from "react-icons/hi";
+import { ImCart } from "react-icons/im";
 import { useContext } from "react";
 import Auth from "../../context/UserData.jsx";
 import { signOut } from "firebase/auth";
@@ -86,7 +87,7 @@ const Navbar = () => {
         <ul className="flex justify-between items-center h-[60px] ps-4 pe-4">
           <li>
             <Link to="/">
-              <GiTigerHead className="text-primary text-3xl hover:text-hover hover:duration-400" />
+              <ImCart className="text-primary text-3xl hover:text-hover hover:duration-400" />
             </Link>
           </li>
           <li className="flex items-center">

@@ -7,6 +7,8 @@ export default {
       // => @media (min-width: 640px) { ... }
 
       md: { max: "768px" },
+      xs: { max: "420px" },
+      sm: { max: "640px" },
       // => @media (min-width: 768px) { ... }
 
       lg: "1024px",

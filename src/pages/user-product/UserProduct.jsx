@@ -22,6 +22,7 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  deleteDoc,
 } from "../../config/firebase";
 import { useForm } from "react-hook-form";
 import {
@@ -144,10 +145,31 @@ const UserProduct = () => {
     });
     setCurrentUserProduct(product);
   };
-
+ 
   useEffect(() => {
     getCurrentUserProduct();
   }, []);
+   const deleteProduct = async(deleteProductId)=>{
+   
+Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then(async(result) => {
+  if (result.isConfirmed) {
+    await deleteDoc(doc(db, "products", deleteProductId));
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+  }
+});
+  }
   return (
     <>
       <Navbar />
@@ -230,18 +252,18 @@ const UserProduct = () => {
         </form>
       </Modal>
       <Row>
-        <Col lg={24} className="">
+        <Col lg={24} md={24} sm={24} xs={24} className="">
           <h1 className="text-center font-bold text-[1.5rem]">
             Manage Your Card
           </h1>
           {currentUserProduct.map((value) => (
             // console.log(value);
             <div
-              className="my-shadow h-22 m-auto  w-[80%] mt-2 h-[120px] flex items-center p-2 justify-between bg-white"
+              className="my-shadow h-22 m-auto w-[80%] sm:w-[90%] xs:w-[98%] mt-2 h-[120px] flex items-center p-2 justify-between bg-white"
               key={value.userId}
             >
               <div className="flex">
-                <div className="">
+                <div className="h-[100px] w-[100px] ">
                   <img
                     src={value.productImage}
                     alt=""
@@ -249,9 +271,9 @@ const UserProduct = () => {
                   />
                 </div>
                 <div className="ms-4 flex flex-col justify-end">
-                  <p className="font-semibold text-[2rem]">{value.title}</p>
+                  <p className="font-semibold text-[1.5rem]">{value.title}</p>
 
-                  <p className="font-semibold text-[gray] text-[1.2rem]">
+                  <p className="font-semibold text-[gray] text-[0.9rem]">
                     Description: {value.description}
                   </p>
                 </div>
@@ -261,6 +283,7 @@ const UserProduct = () => {
                   <Button
                     btnIcons={<AiFillDelete />}
                     classAdd="bg-[red] hover:bg-[#f06060]"
+                    onClick={() => deleteProduct(value.userId)}
                   />
                   <Button
                     btnIcons={<MdEditSquare />}
@@ -281,19 +304,3 @@ const UserProduct = () => {
 };
 export default UserProduct;
 
-//  <>
-//       <Button type="primary" onClick={() => setModal2Open(true)}>
-//         Vertically centered modal dialog
-//       </Button>
-//       <Modal
-//         title="Vertically centered modal dialog"
-//         centered
-//         open={modal2Open}
-//         onOk={() => setModal2Open(false)}
-//         onCancel={() => setModal2Open(false)}
-//       >
-//         <p>some contents...</p>
-//         <p>some contents...</p>
-//         <p>some contents...</p>
-//       </Modal>
-//       </>

@@ -28,6 +28,7 @@ import {
   orderBy,
   updateDoc,
   arrayUnion,
+  deleteDoc,
 } from "firebase/firestore";
 import { getDatabase, set } from "firebase/database";
 const firebaseConfig = {
@@ -75,4 +76,5 @@ export {
   set,
   updateDoc,
   arrayUnion,
+  deleteDoc
 };

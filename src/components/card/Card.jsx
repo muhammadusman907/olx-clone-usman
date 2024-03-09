@@ -11,6 +11,7 @@ const Card = ({
   imgAddClass,
   onLoads,
   imageLoading,
+  ratings,
   ...prop
 }) => {
   return (
@@ -18,9 +19,11 @@ const Card = ({
       <div
         {...prop}
         className={`bg-white rounded h-[350px] overflow-hidden my-shadow ${classAdd} cursor-pointer`}
-      > 
+      >
         <div className="my-shadow overflow-hidden relative">
-        {imageLoading && <Loader classAdd="items-start justify-start top-1 absolute"/>}
+          {imageLoading && (
+            <Loader classAdd="items-start justify-start top-1 absolute" />
+          )}
           <img
             className={`w-full h-[200px] ${imgAddClass} `}
             src={images}
@@ -33,7 +36,10 @@ const Card = ({
           <p className="text-[gray] text-base">{descriptions}</p>
           <div className="font-bold text-[1rem] mb-2">{names}</div>
           <div>
-            <Rate allowHalf defaultValue={5} />
+            <Rate
+              allowHalf
+              defaultValue={ratings ? ratings : Math.random(10) * 10}
+            />
           </div>
         </div>
       </div>

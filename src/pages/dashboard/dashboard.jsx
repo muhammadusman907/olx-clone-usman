@@ -212,9 +212,9 @@ const Dashboard = () => {
           <div className="w-full">
             <div className="bg-white h-[150px] w-[100%] me-2 p-3 rounded-[4px]">
               <div className="flex items-center h-[70px]">
-                <div className="h-[60px] w-[60px] rounded-full bg-primary ">
+                <div className="h-[60px] w-[60px] rounded-full my-shadow ">
                   <img
-                    className="h-[60px] w-[60px] rounded-full object-cover"
+                    className="object-cover w-full"
                     src={userData?.photoUrl ? userData?.photoUrl : CardImage}
                     alt=""
                   />

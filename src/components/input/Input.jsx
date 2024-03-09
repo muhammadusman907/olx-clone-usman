@@ -52,12 +52,35 @@ const SelectInput = ({
   registers,
   types,
   messages,
+  option,
 }) => {
-  //  console.log(messages);
+  console.log({ option });
+  // const mapsOption = option.renderData.filter(
+  //   (values, index) => values.category !== values.category
+  //   // return { value: option.indexOf(values) === index };
+
+  //   //  console.log (values.catgory)
+  // );
+  const uniqueCategories =
+    option &&
+    option.renderData.reduce((unique, values) => {
+      return unique.some((item) => item.category === values.category)
+        ? unique
+        : [...unique, values];
+    }, []);
+  const mapOption =
+    uniqueCategories &&
+    uniqueCategories.map((values) => ({
+      value: values.category,
+    }));
+  console.log({ mapOption });
+  console.log("message select --->", messages);
   return (
     <>
       {label && <label htmlFor={names}>{label}:</label>}
-      <div className="text-[red]">{}</div>
+      <div className="text-[red]">
+        {messages && messages?.select_category?.message}
+      </div>
       <Controller
         name={names} // Specify the field name
         control={controls} // Pass control prop
@@ -67,48 +90,61 @@ const SelectInput = ({
             {...field}
             placeholder={placeholders}
             className={`w-[100%] rounded-lg ${classAdd} bg-white `}
-            options={[
-              {
-                label: "Car",
-                value: "car",
-              },
-              {
-                label: "Electronics",
-                value: "electronics",
-              },
-              {
-                label: "Clothing",
-                value: "clothing",
-              },
-              {
-                label: "Home Appliances",
-                value: "home_appliances",
-              },
-              {
-                label: "Furniture",
-                value: "furniture",
-              },
-              {
-                label: "Beauty and Personal Care",
-                value: "beauty_personal_care",
-              },
-              {
-                label: "Sports and Outdoors",
-                value: "sports_outdoors",
-              },
-              {
-                label: "Books and Literature",
-                value: "books_literature",
-              },
-              {
-                label: "Toys and Games",
-                value: "toys_games",
-              },
-              {
-                label: "Health and Wellness",
-                value: "health_wellness",
-              },
-            ]}
+            options={
+              mapOption
+                ? mapOption
+                : [
+                    {
+                      label: "bike",
+                      value: "bike",
+                    },
+                    {
+                      label: "Moblie",
+                      value: "mobile",
+                    },
+                    {
+                      label: "Car",
+                      value: "car",
+                    },
+                    {
+                      label: "Electronics",
+                      value: "electronics",
+                    },
+
+                    {
+                      label: "Clothing",
+                      value: "clothing",
+                    },
+                    {
+                      label: "Home Appliances",
+                      value: "home_appliances",
+                    },
+                    {
+                      label: "Furniture",
+                      value: "furniture",
+                    },
+                    {
+                      label: "Beauty and Personal Care",
+                      value: "beauty_personal_care",
+                    },
+                    {
+                      label: "Sports and Outdoors",
+                      value: "sports_outdoors",
+                    },
+                    {
+                      label: "Books and Literature",
+                      value: "books_literature",
+                    },
+                    {
+                      label: "Toys and Games",
+                      value: "toys_games",
+                    },
+                    {
+                      label: "Health and Wellness",
+                      value: "health_wellness",
+                    },
+                  ]
+            }
           />
         )}
       />
