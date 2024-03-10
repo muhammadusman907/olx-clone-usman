@@ -177,7 +177,7 @@ const Chat = () => {
     <>
       <Navbar />
       <Row className="mt-2 h-[500px]">
-        <Col className="my-shadow" lg={10}>
+        <Col className="my-shadow" lg={10} md={8} sm={6} xs={6} >
           <Row className="">
             <Col className="my-shadow w-full p-3 flex items-center">
               <div className="h-[60px] w-[60px] my-shadow rounded-full">
@@ -210,7 +210,7 @@ const Chat = () => {
             </Col>
           </Row>
         </Col>
-        <Col className="my-shadow relative" lg={14}>
+        <Col className="my-shadow relative" lg={14} md={16} sm={18} xs={18}>
           <Row>
             <Col className="border-b w-full p-2 flex items-center">
               <div className="my-shadow w-[50px] h-[50px] rounded-full ">
